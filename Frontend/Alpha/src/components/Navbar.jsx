@@ -4,6 +4,7 @@ import Badge from "./Badge";
 import Searchbar from "./Searchbar";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 function Navbar() {
   return (
@@ -30,8 +31,10 @@ function Navbar() {
             <Searchbar />
           </li>
         </ul>
-
-        <div className="nav-item profile">profile</div>
+      
+        <div className="nav-item profile">
+        <PermIdentityIcon/> 
+        </div>
       </div>
       <Link to="/checkout">
         <div className="cart">
