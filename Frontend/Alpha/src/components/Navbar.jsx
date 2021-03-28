@@ -4,8 +4,11 @@ import Badge from "./Badge";
 import Searchbar from "./Searchbar";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+import { useStateValue } from "../StateProvider";
 
 function Navbar() {
+  const [{ basket }, dispatch] = useStateValue();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <button
@@ -36,7 +39,7 @@ function Navbar() {
       <Link to="/checkout">
         <div className="cart">
           <ShoppingBasketIcon />
-          <span className="basketCount">0</span>
+          <span className="basketCount">{basket?.length}</span>
         </div>
       </Link>
     </nav>

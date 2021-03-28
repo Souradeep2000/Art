@@ -1,8 +1,18 @@
 import React from "react";
+import { useStateValue } from "../StateProvider";
 
 function Card(props) {
+  const [{ basket }, dispatch] = useStateValue();
+  // console.log("this is my basket >>>", basket);
+  const addToBasket = () => {
+    //dispatch the item into the data layer
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: props,
+    });
+  };
+  console.log(props.id);
   return (
-    // col-lg-3 col-md-3 col-sm-12
     <div className="product">
       <div className="card text-center carding" style={{ width: "18rem" }}>
         <img src={props.src} className="card-img-top" alt="..." />
@@ -11,10 +21,10 @@ function Card(props) {
           <p className="card-text">{props.p}</p>
           <div className="product_rating">
             <small>₹</small>
-            <strong>price </strong>
+            <strong>{props.price} </strong>
             {Array(props.star)
               .fill()
-              .map((_, i) => (
+              .map((star) => (
                 <p>⭐</p>
               ))}
           </div>
@@ -22,7 +32,7 @@ function Card(props) {
           <a href={props.a} className="btn btn-primary card-buy">
             Buy
           </a>
-          <a href={props.a} className="btn btn-primary card-add">
+          <a className="btn btn-primary card-add" onClick={addToBasket}>
             Add to Basket
           </a>
         </div>

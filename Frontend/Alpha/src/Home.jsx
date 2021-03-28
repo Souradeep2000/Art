@@ -9,12 +9,14 @@ import axios from "./axios";
 function createCard(individualCard) {
   return (
     <Card
-      key={individualCard.title}
+      key={individualCard._id}
+      id={individualCard._id}
       src={individualCard.src}
       title={individualCard.title}
       p={individualCard.p}
       a={individualCard.a}
-      star={4}
+      price={individualCard.price}
+      star={individualCard.star}
     />
   );
 }

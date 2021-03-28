@@ -5,6 +5,7 @@ const cardSchema = mongoose.Schema({
   title: String,
   p: String,
   a: String,
+  price: Number,
   star: Number,
 });
 

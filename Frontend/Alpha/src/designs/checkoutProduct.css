@@ -1,0 +1,27 @@
+.checkoutProduct {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-right: 10px;
+  border-bottom: 1px solid lightgray;
+}
+.checkoutProduct__image {
+  object-fit: contain;
+  width: 170px;
+  height: 190px;
+  transition: 0.3s;
+}
+.checkoutProduct__image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.25);
+}
+.checkoutProduct__info {
+  padding-left: 20px;
+}
+.checkoutProduct__title {
+  font-size: 17px;
+  font-weight: 600;
+}
+.checkoutProduct__rating {
+  display: flex;
+}
