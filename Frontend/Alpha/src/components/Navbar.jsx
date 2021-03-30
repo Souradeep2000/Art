@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
 import Badge from "./Badge";
 import Searchbar from "./Searchbar";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../StateProvider";
+import { db } from "../firebase";
 
 function Navbar() {
-  const [{ basket }, dispatch] = useStateValue();
+  //const [{ basket }, dispatch] = useStateValue();
+  const [cartItems, Setcartitems] = useState([]);
+  const getCartItems = () => {
+    db.collection("cartItems").onSnapshot((snapshot) => {
+      const tempItems = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        card: doc.data(),
+      }));
+      Setcartitems(tempItems);
+    });
+  };
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
+  const getCount = () => {
+    let count = 0;
+    console.log(cartItems);
+    cartItems.forEach((item) => {
+      count += item.card.quantity;
+    });
+    return count;
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,7 +62,7 @@ function Navbar() {
       <Link to="/checkout">
         <div className="cart">
           <ShoppingBasketIcon />
-          <span className="basketCount">{basket?.length}</span>
+          <span className="basketCount">{getCount()}</span>
         </div>
       </Link>
     </nav>

@@ -51,28 +51,7 @@ function Carousel() {
 
   return (
     <div className="container">
-      <Slider {...settings}>
-        {carouselCard.map(createCard)}
-        <Card
-          key={1}
-          src="https://instagram.fccu3-1.fna.fbcdn.net/v/t51.2885-15/e35/153710784_114142664021089_3735377926884964837_n.jpg?tp=1&_nc_ht=instagram.fccu3-1.fna.fbcdn.net&_nc_cat=101&_nc_ohc=IfbroHiOTmkAX-0tOX0&ccb=7-4&oh=f438576f580c4b77e1633ec8d922a325&oe=607D3F02"
-        />
-
-        <Card
-          key={2}
-          src="https://instagram.fccu3-1.fna.fbcdn.net/v/t51.2885-15/e35/153710784_114142664021089_3735377926884964837_n.jpg?tp=1&_nc_ht=instagram.fccu3-1.fna.fbcdn.net&_nc_cat=101&_nc_ohc=IfbroHiOTmkAX-0tOX0&ccb=7-4&oh=f438576f580c4b77e1633ec8d922a325&oe=607D3F02"
-        />
-
-        <Card
-          key={3}
-          src="https://instagram.fccu3-1.fna.fbcdn.net/v/t51.2885-15/e35/153710784_114142664021089_3735377926884964837_n.jpg?tp=1&_nc_ht=instagram.fccu3-1.fna.fbcdn.net&_nc_cat=101&_nc_ohc=IfbroHiOTmkAX-0tOX0&ccb=7-4&oh=f438576f580c4b77e1633ec8d922a325&oe=607D3F02"
-        />
-
-        <Card
-          key={4}
-          src="https://instagram.fccu3-1.fna.fbcdn.net/v/t51.2885-15/e35/153710784_114142664021089_3735377926884964837_n.jpg?tp=1&_nc_ht=instagram.fccu3-1.fna.fbcdn.net&_nc_cat=101&_nc_ohc=IfbroHiOTmkAX-0tOX0&ccb=7-4&oh=f438576f580c4b77e1633ec8d922a325&oe=607D3F02"
-        />
-      </Slider>
+      <Slider {...settings}>{carouselCard.map(createCard)}</Slider>
     </div>
   );
 }

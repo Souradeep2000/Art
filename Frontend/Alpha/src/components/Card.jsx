@@ -1,17 +1,38 @@
 import React from "react";
 import { useStateValue } from "../StateProvider";
+import { db } from "../firebase";
 
 function Card(props) {
-  const [{ basket }, dispatch] = useStateValue();
-  // console.log("this is my basket >>>", basket);
+  // const [{ basket }, dispatch] = useStateValue();
+  // // console.log("this is my basket >>>", basket);
+  // const addToBasket = () => {
+  //   //dispatch the item into the data layer
+  //   dispatch({
+  //     type: "ADD_TO_BASKET",
+  //     item: props,
+  //   });
+  // };
+  //console.log(props.id);
   const addToBasket = () => {
-    //dispatch the item into the data layer
-    dispatch({
-      type: "ADD_TO_BASKET",
-      item: props,
+    const cartItem = db.collection("cartItems").doc(props.id); //create a document in the db with the product id
+    cartItem.get().then((doc) => {
+      if (doc.exists) {
+        cartItem.update({
+          quantity: doc.data().quantity + 1,
+        });
+      } else {
+        db.collection("cartItems").doc(props.id).set({
+          title: props.title,
+          src: props.src,
+          p: props.p,
+          price: props.price,
+          star: props.star,
+          quantity: 1,
+        });
+      }
     });
   };
-  console.log(props.id);
+
   return (
     <div className="product">
       <div className="card text-center carding" style={{ width: "18rem" }}>
