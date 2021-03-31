@@ -1,11 +1,11 @@
 import React from "react";
 import "../designs/subtotal.css";
 import CurrencyFormat from "react-currency-format";
-import { useStateValue } from "../StateProvider";
-import { getBasketTotal } from "../reducer";
+// import { useStateValue } from "../StateProvider";
+// import { getBasketTotal } from "../reducer";
 
 function Subtotal(props) {
-  const [{ basket }, dispatch] = useStateValue();
+  //const [{ basket }, dispatch] = useStateValue();
   const getTotalPrice = () => {
     let total = 0;
     props.cartItems.forEach((item) => {
@@ -43,7 +43,7 @@ function Subtotal(props) {
         thousandSeparator={true} //if cart is in thousand then show thousand coma
         prefix={"₹"}
       />
-      <button>Proceed to Buy</button>
+      <button className="proceed">Proceed to Buy</button>
     </div>
   );
 }

@@ -99,24 +99,26 @@ body {
   background-color: #ffc107;
   color: black;
   border: 1px solid;
+  border-radius: 5px;
 }
 .card-add {
   margin-left: 5px;
   background-color: #ffc107;
   color: black;
   border: 1px solid;
+  border-radius: 5px;
 }
 
 /* sliding arrows */
 .slick-arrow {
-  background-color: aqua !important;
+  background-color: #343a40 !important;
   height: 35px !important;
   width: 35px !important;
   border-radius: 100px;
 }
 .slick-arrow:hover,
 .slick-arrow:active {
-  background-color: black !important;
+  background-color: #ffc107 !important;
 }
 
 /* footer */

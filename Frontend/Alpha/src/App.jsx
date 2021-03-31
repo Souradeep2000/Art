@@ -1,8 +1,10 @@
 import React from "react";
+import "./registration/fontawesome";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import Navbar from "./components/Navbar";
 import Checkout from "./Checkout";
+import Regis from "./registration/Regis";
 
 function App() {
   return (
@@ -17,6 +19,10 @@ function App() {
             <Navbar />
 
             <Checkout />
+          </Route>
+
+          <Route path="/sign">
+            <Regis />
           </Route>
         </Switch>
       </div>
