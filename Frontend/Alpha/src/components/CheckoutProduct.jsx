@@ -1,35 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../designs/checkoutProduct.css";
 import { useStateValue } from "../StateProvider";
+import Rating from "./Rating";
 import { db } from "../firebase";
+import { saveState } from "../localStorage";
 
 function CheckoutProduct(props) {
-  // const [{ basket }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
 
-  // const removeFromBasket = () => {
-  //   dispatch({
-  //     type: "REMOVE_FROM_BASKET",
-  //     id: props.id,
-  //   });
-  // };
-  //console.log(props.id);
-  const removeFromBasket = (event) => {
-    event.preventDefault();
-    db.collection("cartItems").doc(props.id).delete();
+  const removeFromBasket = () => {
+    dispatch({
+      type: "REMOVE_FROM_BASKET",
+      id: props.id,
+    });
   };
+  useEffect(() => {
+    saveState(basket);
+  }, [basket]);
 
   let options = [];
   for (let i = 1; i < Math.max(props.quantity + 1, 10); i++) {
     options.push(<option value={i}>Qty:{i}</option>);
   }
-  const changeQuanity = (newQty) => {
-    db.collection("cartItems")
-      .doc(props.id)
-      .update({
-        quantity: parseInt(newQty),
-      });
-  };
 
+  const adjustQty = (newQty) => {
+    dispatch({
+      type: "ADJUST_QTY",
+      item: {
+        id: props.id,
+        qty: parseInt(newQty),
+      },
+    });
+  };
   return (
     <div className="checkoutProduct">
       <img className="checkoutProduct__image" src={props.src} />
@@ -49,19 +51,13 @@ function CheckoutProduct(props) {
           <div className="checkoutProduct__qty">
             <select
               value={props.quantity}
-              onChange={(event) => changeQuanity(event.target.value)}
+              onChange={(event) => adjustQty(event.target.value)}
             >
               {options}
             </select>
           </div>
         </p>
-        <div className="checkoutProduct__rating">
-          {Array(props.star)
-            .fill()
-            .map((star) => (
-              <p>⭐</p>
-            ))}
-        </div>
+        <Rating star={props.star} />
         <a className="btn btn-primary card-add" onClick={removeFromBasket}>
           Remove from Basket
         </a>

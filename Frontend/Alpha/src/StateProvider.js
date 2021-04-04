@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useReducer } from "react";
-//to use the add basket method
 
 //prepares the data layer
 export const StateContext = createContext();

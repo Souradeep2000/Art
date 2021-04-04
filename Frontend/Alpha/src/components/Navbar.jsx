@@ -8,26 +8,25 @@ import { useStateValue } from "../StateProvider";
 import { db } from "../firebase";
 
 function Navbar() {
-  //const [{ basket }, dispatch] = useStateValue();
-  const [cartItems, Setcartitems] = useState([]);
-  const getCartItems = () => {
-    db.collection("cartItems").onSnapshot((snapshot) => {
-      const tempItems = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        card: doc.data(),
-      }));
-      Setcartitems(tempItems);
-    });
-  };
-  useEffect(() => {
-    getCartItems();
-  }, []);
+  const [{ basket }, dispatch] = useStateValue();
+  // const [cartItems, Setcartitems] = useState([]);
+  // const getCartItems = () => {
+  //   db.collection("cartItems").onSnapshot((snapshot) => {
+  //     const tempItems = snapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       card: doc.data(),
+  //     }));
+  //     Setcartitems(tempItems);
+  //   });
+  // };
+  // useEffect(() => {
+  //   getCartItems();
+  // }, []);
 
   const getCount = () => {
     let count = 0;
-    console.log(cartItems);
-    cartItems.forEach((item) => {
-      count += item.card.quantity;
+    basket.forEach((item) => {
+      count += item.qty;
     });
     return count;
   };

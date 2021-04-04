@@ -1,23 +1,22 @@
 import React from "react";
 import "../designs/subtotal.css";
 import CurrencyFormat from "react-currency-format";
-// import { useStateValue } from "../StateProvider";
-// import { getBasketTotal } from "../reducer";
+import { useStateValue } from "../StateProvider";
 
 function Subtotal(props) {
-  //const [{ basket }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const getTotalPrice = () => {
     let total = 0;
-    props.cartItems.forEach((item) => {
-      total += item.card.price * item.card.quantity;
+    basket.forEach((item) => {
+      total += item.price * item.qty;
     });
     return total;
   };
 
   const getCount = () => {
     let count = 0;
-    props.cartItems.forEach((item) => {
-      count += item.card.quantity;
+    basket.forEach((item) => {
+      count += item.qty;
     });
     return count;
   };

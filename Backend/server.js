@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dbCards from "./models/dbCards.js";
+import "dotenv";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get("/", function (req, res) {
   res.send("HEllo world");
 });
 
+// for cards
 app.post("/cardUpload", function (req, res) {
   const cardDetails = req.body;
   dbCards.create(cardDetails, function (err, createddata) {

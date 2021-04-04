@@ -5,28 +5,32 @@ import Home from "./Home";
 import Navbar from "./components/Navbar";
 import Checkout from "./Checkout";
 import Regis from "./registration/Regis";
+import { StateProvider } from "./StateProvider";
+import reducer, { initialState } from "./reducer";
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <Router>
+        <div className="app">
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
 
-          <Route path="/checkout">
-            <Navbar />
+            <Route path="/checkout">
+              <Navbar />
 
-            <Checkout />
-          </Route>
+              <Checkout />
+            </Route>
 
-          <Route path="/sign">
-            <Regis />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+            <Route path="/sign">
+              <Regis />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </StateProvider>
   );
 }
 

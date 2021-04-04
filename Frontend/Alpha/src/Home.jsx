@@ -40,7 +40,7 @@ function Home() {
       </div>
 
       <div className="home__container">
-        <div className="home__row">{card.map(createCard)}</div>
+        <div className="home__row">{card.slice(0, 5).map(createCard)}</div>
       </div>
 
       <Carousel />

@@ -4,18 +4,19 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Card from "./Card";
 import { db } from "../firebase";
+import axios from "../axios";
 
 function createCard(individualCard) {
   return (
     <Card
-      key={individualCard.id}
-      id={individualCard.id}
-      src={individualCard.card.src}
-      title={individualCard.card.title}
-      p={individualCard.card.p}
-      a={individualCard.card.a}
-      price={individualCard.card.price}
-      star={individualCard.card.star}
+      key={individualCard._id}
+      id={individualCard._id}
+      src={individualCard.src}
+      title={individualCard.title}
+      p={individualCard.p}
+      a={individualCard.a}
+      price={individualCard.price}
+      star={individualCard.star}
     />
   );
 }
@@ -23,22 +24,13 @@ function createCard(individualCard) {
 function Carousel() {
   const [carouselCard, Setcarouselcard] = useState([]);
 
-  const getCards = () => {
-    db.collection("carouselCards").onSnapshot((snapshot) => {
-      let tempCards = [];
-
-      tempCards = snapshot.docs.map((doc) => ({
-        id: doc.id, //we can only use id now
-        card: doc.data(), //card used in creating Card which has every fields
-      }));
-      Setcarouselcard(tempCards);
-    });
-  };
-
   useEffect(() => {
-    //this will call the getcards function only once
-    console.log("call cards");
-    getCards();
+    async function fetchCarousel() {
+      const response = await axios.get("/cardUpload");
+      Setcarouselcard(response.data);
+      return response;
+    }
+    fetchCarousel();
   }, []);
 
   var settings = {
@@ -51,7 +43,7 @@ function Carousel() {
 
   return (
     <div className="container">
-      <Slider {...settings}>{carouselCard.map(createCard)}</Slider>
+      <Slider {...settings}>{carouselCard.slice(5, 10).map(createCard)}</Slider>
     </div>
   );
 }
