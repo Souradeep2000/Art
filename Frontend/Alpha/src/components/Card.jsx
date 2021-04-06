@@ -2,15 +2,22 @@ import React, { useEffect } from "react";
 import { useStateValue } from "../StateProvider";
 import { db } from "../firebase";
 import Rating from "./Rating";
-import { saveState } from "../localStorage";
+import { saveState, saveOneProduct } from "../localStorage";
+import { Link } from "react-router-dom";
 
 function Card(props) {
-  //
   const [{ basket }, dispatch] = useStateValue();
   // console.log("this is my basket >>>", basket);
   const addToBasket = () => {
     dispatch({
       type: "ADD_TO_BASKET",
+      item: props,
+    });
+  };
+
+  const viewProduct = () => {
+    dispatch({
+      type: "VIEW_PRODUCT",
       item: props,
     });
   };
@@ -22,15 +29,21 @@ function Card(props) {
   return (
     <div className="product">
       <div className="card text-center carding" style={{ width: "18rem" }}>
-        {/* <Link to={`/card/${props.id}`}><img .../> </Link> */}
-        <img src={props.src} className="card-img-top" alt="..." />
+        <Link to={`/${props.id}`}>
+          <img
+            src={props.src}
+            className="card-img-top"
+            onClick={viewProduct}
+            alt="..."
+          />
+        </Link>
         <div className="card-body">
           <h5 className="card-title">{props.title}</h5>
           <p className="card-text">{props.p}</p>
           <div className="product_rating">
             <div>
-              <small>₹</small>
-              <strong>{props.price} </strong>
+              <small style={{ color: " #256eff" }}>₹</small>
+              <strong style={{ color: " #256eff" }}>{props.price} </strong>
             </div>
             <Rating star={props.star} />
           </div>

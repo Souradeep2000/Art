@@ -44,8 +44,8 @@ function CheckoutProduct(props) {
 
         <p className="checkoutProduct__price">
           <div>
-            <small>₹</small>
-            <strong>{props.price}</strong>
+            <small style={{ color: " #256eff" }}>₹</small>
+            <strong style={{ color: " #256eff" }}>{props.price}</strong>
           </div>
 
           <div className="checkoutProduct__qty">

@@ -1,7 +1,8 @@
-import { loadState } from "./localStorage";
+import { loadState, loadOneProduct, saveOneProduct } from "./localStorage";
 
 export const initialState = {
   basket: loadState(),
+  currentProduct: loadOneProduct(),
 };
 
 const reducer = (state, action) => {
@@ -38,6 +39,14 @@ const reducer = (state, action) => {
             ? { ...basketItem, qty: action.item.qty }
             : basketItem
         ),
+      };
+
+    case "VIEW_PRODUCT":
+      //console.log(action.item);
+      saveOneProduct(action.item);
+      return {
+        ...state,
+        currentProduct: action.item,
       };
 
     default:

@@ -1,14 +1,19 @@
 import React from "react";
 import "./registration/fontawesome";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
 import Home from "./Home";
 import Navbar from "./components/Navbar";
 import Checkout from "./Checkout";
 import Regis from "./registration/Regis";
 import { StateProvider } from "./StateProvider";
 import reducer, { initialState } from "./reducer";
+import Singlecard from "./Singlecard";
+import Footer from "./components/Footer";
 
 function App() {
+  const [{ currentProduct }, dispatch] = useStateValue();
+
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
       <Router>
@@ -18,15 +23,21 @@ function App() {
               <Home />
             </Route>
 
-            <Route path="/checkout">
+            <Route exact path="/checkout">
               <Navbar />
-
               <Checkout />
             </Route>
 
-            <Route path="/sign">
+            <Route exact path="/sign">
               <Regis />
             </Route>
+
+            <Route path="/:id">
+              <Navbar />
+              <Singlecard />
+              <Footer />
+            </Route>
+            {/* )} */}
           </Switch>
         </div>
       </Router>

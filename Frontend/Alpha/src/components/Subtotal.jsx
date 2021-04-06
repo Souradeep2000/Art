@@ -28,7 +28,7 @@ function Subtotal(props) {
           <>
             <p>
               Subtotal ({getCount()} items):
-              <strong>{value}</strong>
+              <strong style={{ color: " #256eff" }}>{value}</strong>
             </p>
             <small className="subtotal__gift">
               <input type="checkbox" />
