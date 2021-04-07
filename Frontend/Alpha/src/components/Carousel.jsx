@@ -42,7 +42,7 @@ function Carousel() {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginBottom: "40px" }}>
       <Slider {...settings}>{carouselCard.slice(5, 10).map(createCard)}</Slider>
     </div>
   );

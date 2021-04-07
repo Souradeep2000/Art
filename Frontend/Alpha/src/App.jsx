@@ -1,7 +1,6 @@
 import React from "react";
 import "./registration/fontawesome";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useStateValue } from "./StateProvider";
 import Home from "./Home";
 import Navbar from "./components/Navbar";
 import Checkout from "./Checkout";
@@ -12,8 +11,6 @@ import Singlecard from "./Singlecard";
 import Footer from "./components/Footer";
 
 function App() {
-  const [{ currentProduct }, dispatch] = useStateValue();
-
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
       <Router>
@@ -37,7 +34,6 @@ function App() {
               <Singlecard />
               <Footer />
             </Route>
-            {/* )} */}
           </Switch>
         </div>
       </Router>
