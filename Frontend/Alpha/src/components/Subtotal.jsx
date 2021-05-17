@@ -1,10 +1,17 @@
 import React from "react";
 import "../designs/subtotal.css";
 import CurrencyFormat from "react-currency-format";
-import { useStateValue } from "../StateProvider";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+// import { useStateValue } from "../StateProvider";
 
-function Subtotal(props) {
-  const [{ basket }, dispatch] = useStateValue();
+function Subtotal() {
+  // const [{ basket }] = useStateValue();
+  let history = useHistory();
+
+  const productCart = useSelector((state) => state.productCart);
+  const { basket } = productCart;
+
   const getTotalPrice = () => {
     let total = 0;
     basket.forEach((item) => {
@@ -19,6 +26,10 @@ function Subtotal(props) {
       count += item.qty;
     });
     return count;
+  };
+
+  const checkoutHandler = () => {
+    history.push("/sign?redirect=shipping");
   };
 
   return (
@@ -42,7 +53,14 @@ function Subtotal(props) {
         thousandSeparator={true} //if cart is in thousand then show thousand coma
         prefix={"₹"}
       />
-      <button className="proceed">Proceed to Buy</button>
+      <button
+        type="button"
+        onClick={checkoutHandler}
+        className="proceed"
+        disabled={getCount() === 0}
+      >
+        Proceed to Buy
+      </button>
     </div>
   );
 }

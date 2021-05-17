@@ -1,24 +1,22 @@
 import React, { useEffect } from "react";
-import { useStateValue } from "../StateProvider";
-import { db } from "../firebase";
+// import { useStateValue } from "../StateProvider";
+// import { db } from "../firebase";
 import Rating from "./Rating";
-import { saveState, saveOneProduct } from "../localStorage";
+import { saveState } from "../localStorage";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function Card(props) {
-  const [{ basket }, dispatch] = useStateValue();
-  // console.log("this is my basket >>>", basket);
+  //const [{ basket }, dispatch] = useStateValue();
+  // console.log("this is my basket >>>", props);
+  const dispatch = useDispatch();
+  const productCart = useSelector((state) => state.productCart);
+  const { basket } = productCart;
+
   const addToBasket = () => {
     dispatch({
-      type: "ADD_TO_BASKET",
-      item: props,
-    });
-  };
-
-  const viewProduct = () => {
-    dispatch({
-      type: "VIEW_PRODUCT",
-      item: props,
+      type: "ADD_TO_CART",
+      payload: props,
     });
   };
 
@@ -29,13 +27,8 @@ function Card(props) {
   return (
     <div className="product">
       <div className="card text-center carding" style={{ width: "18rem" }}>
-        <Link to={`/${props.id}`}>
-          <img
-            src={props.src}
-            className="card-img-top"
-            onClick={viewProduct}
-            alt="..."
-          />
+        <Link to={`/${props._id}`}>
+          <img src={props.src} className="card-img-top" alt="..." />
         </Link>
         <div className="card-body">
           <h5 className="card-title">{props.title}</h5>

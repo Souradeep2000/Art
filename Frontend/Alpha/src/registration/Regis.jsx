@@ -1,46 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../designs/registration.css";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import inlogo from "../registration/img/in.svg";
 import uplogo from "../registration/img/up.svg";
+import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../firebase";
+import { register, signin } from "../actions/userActions";
+import LoadingDiv from "../components/LoadingDiv";
+import MessageDiv from "../components/MessageDiv";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 function Regis() {
   const history = useHistory();
+  let location = useLocation();
+
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
+  // login
   const [email, Setemail] = useState("");
   const [password, Setpassword] = useState("");
-  const [username, Setusername] = useState("");
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { loading, error, userInfo } = userSignin;
+
+  const dispatch = useDispatch();
+
   const SignIn = (e) => {
     e.preventDefault();
-    //firebase login
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((auth) => {
-        history.push("/");
-      })
-      .catch((error) => alert(error.message));
+    dispatch(signin(email, password));
   };
-  const register = (e) => {
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history.push, redirect, userInfo]);
+
+  //register
+  const [username, Setusername] = useState("");
+  const [regemail, regSetemail] = useState("");
+  const [regpassword, regSetpassword] = useState("");
+  const [regConfirmpassword, regSetConfirmpassword] = useState("");
+
+  const userRegister = useSelector((state) => state.userRegister);
+
+  const Register = (e) => {
     e.preventDefault();
     //firebase register, where auth is the information about the user
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        console.log(auth);
-        if (auth) {
-          auth.user.updateProfile({
-            displayName: username,
-          });
-          history.push("/");
-        }
-      })
-      .catch((error) => alert(error.message));
+    // auth
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then((auth) => {
+    //     console.log(auth);
+    //     if (auth) {
+    //       auth.user.updateProfile({
+    //         displayName: username,
+    //       });
+    //       history.push("/");
+    //     }
+    //   })
+    //   .catch((error) => alert(error.message));
+    if (regpassword !== regConfirmpassword) {
+      alert("Password should match with Confirm Password");
+    } else {
+      dispatch(register(username, regemail, regpassword));
+    }
   };
+
+  useEffect(() => {
+    if (userRegister.userDetails) {
+      history.push(redirect);
+    }
+  }, [history.push, redirect, userRegister.userDetails]);
 
   // for adding animate class
   const [signup, setSignup] = useState(false);
@@ -59,13 +94,14 @@ function Regis() {
             {/* 1st login form */}
             <form action="" className="sign-in-form">
               <h2 className="title">Sign in</h2>
-
+              {loading && <LoadingDiv></LoadingDiv>}
+              {error && <MessageDiv status={"danger"}>{error}</MessageDiv>}
               <div className="input-field">
                 <div className="icon">
                   <EmailOutlinedIcon />
                 </div>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="email"
                   value={email}
                   onChange={(e) => Setemail(e.target.value)}
@@ -104,7 +140,13 @@ function Regis() {
 
             <form action="" className="sign-up-form">
               <h2 className="title">Sign up</h2>
-
+              {userRegister.loading && <LoadingDiv></LoadingDiv>}
+              {userRegister.error && (
+                <MessageDiv status={"initial"}>
+                  {userRegister.error +
+                    " email already exists or fill the details properly"}
+                </MessageDiv>
+              )}
               <div className="input-field">
                 <div className="icon">
                   <PersonOutlineIcon />
@@ -123,8 +165,19 @@ function Regis() {
                 <input
                   type="email"
                   placeholder="email"
-                  value={email}
-                  onChange={(e) => Setemail(e.target.value)}
+                  value={regemail}
+                  onChange={(e) => regSetemail(e.target.value)}
+                />
+              </div>
+              <div className="input-field">
+                <div className="icon">
+                  <LockOpenIcon />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={regpassword}
+                  onChange={(e) => regSetpassword(e.target.value)}
                 />
               </div>
               <div className="input-field">
@@ -133,9 +186,9 @@ function Regis() {
                 </div>
                 <input
                   type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => Setpassword(e.target.value)}
+                  placeholder="Confirm Password"
+                  value={regConfirmpassword}
+                  onChange={(e) => regSetConfirmpassword(e.target.value)}
                 />
               </div>
 
@@ -143,7 +196,7 @@ function Regis() {
                 type="submit"
                 value="Sign up"
                 className="butn solid"
-                onClick={register}
+                onClick={Register}
               />
               <p className="social-text">Or Sign up with social platforms</p>
               <div className="social-media">

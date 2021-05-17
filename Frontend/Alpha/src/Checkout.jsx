@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import CheckoutProduct from "./components/CheckoutProduct";
 import Subtotal from "./components/Subtotal";
 import "./designs/checkout.css";
-import { useStateValue } from "./StateProvider";
-import { db } from "./firebase";
+//import { useStateValue } from "./StateProvider";
+// import { db } from "./firebase";
 import { saveState } from "./localStorage";
+import { useSelector } from "react-redux";
 
 function Checkout() {
-  const [{ basket }, dispatch] = useStateValue();
+  const productCart = useSelector((state) => state.productCart);
+  const { basket } = productCart;
+
+  //const [{ basket }, dispatch] = useStateValue();
   useEffect(() => {
     saveState(basket);
   }, [basket]);
@@ -19,8 +23,8 @@ function Checkout() {
           <h2 className="checkout__title">Shopping Basket</h2>
           {basket.map((individualCard) => (
             <CheckoutProduct
-              key={individualCard.id}
-              id={individualCard.id}
+              key={individualCard._id}
+              _id={individualCard._id}
               src={individualCard.src}
               title={individualCard.title}
               p={individualCard.p}

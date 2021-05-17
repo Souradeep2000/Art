@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import "../designs/checkoutProduct.css";
-import { useStateValue } from "../StateProvider";
+//import { useStateValue } from "../StateProvider";
 import Rating from "./Rating";
-import { db } from "../firebase";
+//import { db } from "../firebase";
 import { saveState } from "../localStorage";
+import { useDispatch, useSelector } from "react-redux";
 
 function CheckoutProduct(props) {
-  const [{ basket }, dispatch] = useStateValue();
+  //const [{ basket }, dispatch] = useStateValue();
+  const dispatch = useDispatch();
+  const productCart = useSelector((state) => state.productCart);
+  const { basket } = productCart;
 
   const removeFromBasket = () => {
     dispatch({
       type: "REMOVE_FROM_BASKET",
-      id: props.id,
+      _id: props._id,
     });
   };
   useEffect(() => {
@@ -19,15 +23,19 @@ function CheckoutProduct(props) {
   }, [basket]);
 
   let options = [];
-  for (let i = 1; i < Math.max(props.quantity + 1, 10); i++) {
-    options.push(<option value={i}>Qty:{i}</option>);
+  for (let i = 1; i < Math.max(props.quantity + 1, 6); i++) {
+    options.push(
+      <option key={i} value={i}>
+        Qty:{i}
+      </option>
+    );
   }
 
   const adjustQty = (newQty) => {
     dispatch({
       type: "ADJUST_QTY",
       item: {
-        id: props.id,
+        _id: props._id,
         qty: parseInt(newQty),
       },
     });
@@ -42,7 +50,7 @@ function CheckoutProduct(props) {
           {props.p}
         </p>
 
-        <p className="checkoutProduct__price">
+        <div className="checkoutProduct__price">
           <div>
             <small style={{ color: " #256eff" }}>₹</small>
             <strong style={{ color: " #256eff" }}>{props.price}</strong>
@@ -56,7 +64,7 @@ function CheckoutProduct(props) {
               {options}
             </select>
           </div>
-        </p>
+        </div>
         <Rating star={props.star} />
         <a className="btn btn-primary card-add" onClick={removeFromBasket}>
           Remove from Basket

@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "./actions/productActions";
 import Navbar from "./components/Navbar";
 import Box1 from "./components/Box1";
 import Card from "./components/Card";
 import Carousel from "./components/Carousel";
 import Footer from "./components/Footer";
-import axios from "./axios";
+import MessageDiv from "./components/MessageDiv";
+import LoadingDiv from "./components/LoadingDiv";
 
 function createCard(individualCard) {
   return (
     <Card
       key={individualCard._id}
-      id={individualCard._id}
+      _id={individualCard._id}
       src={individualCard.src}
       title={individualCard.title}
       p={individualCard.p}
@@ -22,29 +25,36 @@ function createCard(individualCard) {
 }
 
 function Home() {
-  const [card, Setcard] = useState([]);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, card } = productList;
+
   //getting the data from a route
   useEffect(() => {
-    async function fetchCards() {
-      const response = await axios.get("/cardUpload");
-      Setcard(response.data);
-      return response;
-    }
-    fetchCards();
+    dispatch(listProducts());
   }, []);
+
   return (
     <div>
-      <Navbar />
-      <div className="container-fluid">
-        <Box1 />
-      </div>
+      {loading ? (
+        <LoadingDiv></LoadingDiv>
+      ) : error ? (
+        <MessageDiv status="danger">{error}</MessageDiv>
+      ) : (
+        <div>
+          <Navbar />
+          <div className="container-fluid">
+            <Box1 />
+          </div>
 
-      <div className="home__container">
-        <div className="home__row">{card.slice(0, 5).map(createCard)}</div>
-      </div>
+          <div className="home__container">
+            <div className="home__row">{card.slice(0, 5).map(createCard)}</div>
+          </div>
 
-      <Carousel />
-      <Footer />
+          <Carousel />
+          <Footer />
+        </div>
+      )}
     </div>
   );
 }

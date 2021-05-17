@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Dropdown from "./Dropdown";
 import Badge from "./Badge";
 import Searchbar from "./Searchbar";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
-import { useStateValue } from "../StateProvider";
-import { db } from "../firebase";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+// import { useStateValue } from "../StateProvider";
+//import { db } from "../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import ArrowDropDownCircleOutlinedIcon from "@material-ui/icons/ArrowDropDownCircleOutlined";
+import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
+import { signout } from "../actions/userActions";
 
 function Navbar() {
-  const [{ basket }, dispatch] = useStateValue();
+  //const [{ basket }] = useStateValue();
+  const productCart = useSelector((state) => state.productCart);
+  const { basket } = productCart;
   // const [cartItems, Setcartitems] = useState([]);
   // const getCartItems = () => {
   //   db.collection("cartItems").onSnapshot((snapshot) => {
@@ -22,6 +29,10 @@ function Navbar() {
   // useEffect(() => {
   //   getCartItems();
   // }, []);
+  const dispatch = useDispatch();
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   const getCount = () => {
     let count = 0;
@@ -29,6 +40,11 @@ function Navbar() {
       count += item.qty;
     });
     return count;
+  };
+
+  const signoutHandler = () => {
+    dispatch(signout());
+    location.reload();
   };
 
   return (
@@ -55,8 +71,25 @@ function Navbar() {
             <Searchbar />
           </li>
         </ul>
-
-        <div className="nav-item profile">profile</div>
+        {userInfo ? (
+          <div className="nav-item profile">
+            <Link to="#">
+              {userInfo.name}
+              <ArrowDropDownCircleOutlinedIcon className="ArrowDropDownCircleOutlinedIcon" />
+            </Link>
+            <ul className="profile-content">
+              <Link to="#signout" onClick={signoutHandler}>
+                <ExitToAppRoundedIcon /> Sign Out
+              </Link>
+            </ul>
+          </div>
+        ) : (
+          <div className="nav-item profile">
+            <Link to="/sign">
+              Login <PersonOutlineIcon className="PersonOutlineIcon" />
+            </Link>
+          </div>
+        )}
       </div>
       <Link to="/checkout">
         <div className="cart">

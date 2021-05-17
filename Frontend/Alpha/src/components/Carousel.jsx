@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -10,7 +10,7 @@ function createCard(individualCard) {
   return (
     <Card
       key={individualCard._id}
-      id={individualCard._id}
+      _id={individualCard._id}
       src={individualCard.src}
       title={individualCard.title}
       p={individualCard.p}
@@ -21,17 +21,30 @@ function createCard(individualCard) {
   );
 }
 
+// cleaning useeffect
+function useIsMountedRef() {
+  const isMountedRef = useRef(null);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => (isMountedRef.current = false);
+  });
+  return isMountedRef;
+}
+
 function Carousel() {
   const [carouselCard, Setcarouselcard] = useState([]);
+  const isMountedRef = useIsMountedRef();
 
   useEffect(() => {
     async function fetchCarousel() {
       const response = await axios.get("/cardUpload");
-      Setcarouselcard(response.data);
+      if (isMountedRef.current) {
+        Setcarouselcard(response.data);
+      }
       return response;
     }
     fetchCarousel();
-  }, []);
+  }, [isMountedRef]);
 
   var settings = {
     dots: true,
