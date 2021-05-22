@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../designs/footer.css";
 
 function Footer() {
   const year = new Date().getFullYear();

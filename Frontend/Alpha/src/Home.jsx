@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "./actions/productActions";
+import "./designs/home.css";
 import Navbar from "./components/Navbar";
 import Box1 from "./components/Box1";
 import Card from "./components/Card";

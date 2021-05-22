@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 // import { useStateValue } from "../StateProvider";
 // import { db } from "../firebase";
+import "../designs/card.css";
 import Rating from "./Rating";
 import { saveState } from "../localStorage";
 import { Link } from "react-router-dom";
@@ -27,7 +28,7 @@ function Card(props) {
   return (
     <div className="product">
       <div className="card text-center carding" style={{ width: "18rem" }}>
-        <Link to={`/${props._id}`}>
+        <Link to={`/product/${props._id}`}>
           <img src={props.src} className="card-img-top" alt="..." />
         </Link>
         <div className="card-body">

@@ -1,0 +1,15 @@
+.home__row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-flow: wrap;
+}
+.home__container {
+  width: 90%;
+  margin: 35px auto;
+}
+@media screen and (max-width: 620px) {
+  .home__container {
+    width: 100%;
+  }
+}

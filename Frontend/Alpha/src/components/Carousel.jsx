@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "../designs/slider.css";
 import Slider from "react-slick";
 import Card from "./Card";
 import { db } from "../firebase";

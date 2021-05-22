@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
 }
+
 .subtotal > button {
   background-color: #ffc107;
   color: black;
@@ -25,5 +26,6 @@
 }
 .proceed:hover {
   background-color: #007bff;
+  transition-duration: 0.3s;
   color: #fff;
 }

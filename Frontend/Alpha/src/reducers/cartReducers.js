@@ -1,3 +1,8 @@
+import {
+  CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_SHIPPING_ADDRESS,
+} from "../constants/shippingConstants";
+
 export const cartDetailsReducer = (state = { basket: {} }, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
@@ -30,6 +35,12 @@ export const cartDetailsReducer = (state = { basket: {} }, action) => {
             : basketItem
         ),
       };
+    case CART_SAVE_SHIPPING_ADDRESS:
+      return { ...state, shippingAddress: action.payload };
+    case CART_SAVE_PAYMENT_METHOD:
+      return { ...state, paymentMethod: action.payload };
+    case "CART_EMPTY":
+      return { ...state, basket: [] };
     default:
       return state;
   }

@@ -1,0 +1,55 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+/* Header items */
+.profile {
+  margin-right: 40px;
+  display: inline-block;
+  position: relative;
+}
+.profile a {
+  color: white;
+}
+.profile-content {
+  position: absolute;
+  display: none;
+  text-align: center;
+  border: 1px #ffc107 solid;
+  min-width: 12rem;
+  padding: 1rem;
+  z-index: 1;
+  background-color: whitesmoke;
+  margin: 0;
+  border-radius: 0.5rem;
+}
+.profile-content a {
+  color: #343a40;
+}
+.ArrowDropDownCircleOutlinedIcon {
+  color: #ffc107;
+}
+.PersonOutlineIcon {
+  color: #ffc107;
+}
+.profile:hover .profile-content {
+  display: grid;
+}
+.cart {
+  margin-right: 40px;
+  color: white;
+}
+
+/* cart */
+.basketCount {
+  background-color: #ffc107;
+  border-radius: 50%;
+  padding: 0.3rem 0.6rem;
+  font-size: 1rem;
+  margin-left: 0.2rem;
+  color: whitesmoke;
+}
+.basketCount:hover {
+  color: #343a40;
+}

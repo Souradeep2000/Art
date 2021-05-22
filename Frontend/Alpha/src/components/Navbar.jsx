@@ -3,6 +3,7 @@ import Dropdown from "./Dropdown";
 import Badge from "./Badge";
 import Searchbar from "./Searchbar";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import "../designs/navbar.css";
 import { Link } from "react-router-dom";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 // import { useStateValue } from "../StateProvider";

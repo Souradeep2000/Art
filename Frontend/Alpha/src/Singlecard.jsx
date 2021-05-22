@@ -28,17 +28,10 @@ function Singlecard() {
     console.log("hello");
   }, [dispatch, productId]);
 
-  // const addToBasket = () => {
-  //   dispatch({
-  //     type: "ADD_TO_BASKET",
-  //     item: singleCard,
-  //   });
-  // };
   useEffect(() => {
     console.log("basket>>>>>", basket);
     saveState(basket);
   }, [basket]);
-  // const addToBasket = () => {};
 
   return (
     <div>
