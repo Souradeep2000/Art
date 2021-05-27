@@ -1,19 +1,19 @@
 import React from "react";
 import "./registration/fontawesome";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-//import { Provider } from "react-redux";
 import Home from "./Home";
 import Navbar from "./components/Navbar";
 import Checkout from "./Checkout";
 import Regis from "./registration/Regis";
-//import reducer, { initialState } from "./reducer";
 import Singlecard from "./Singlecard";
 import Footer from "./components/Footer";
-//import store from "./store";
 import ShippingAddress from "./components/ShippingAddress";
 import PaymentMethod from "./components/PaymentMethod";
 import PlaceOrder from "./components/PlaceOrder";
 import Ordered from "./components/Ordered";
+import OrderHistory from "./components/OrderHistory";
+import ProfileUpdate from "./registration/ProfileUpdate";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -32,6 +32,11 @@ function App() {
           <Route path="/sign">
             <Regis />
           </Route>
+
+          <PrivateRoute
+            path="/profileup"
+            component={ProfileUpdate}
+          ></PrivateRoute>
 
           <Route path="/product/:id">
             <Navbar />
@@ -60,6 +65,12 @@ function App() {
           <Route path="/order/:id">
             <Navbar />
             <Ordered />
+            <Footer />
+          </Route>
+
+          <Route path="/orderhistory">
+            <Navbar />
+            <OrderHistory />
             <Footer />
           </Route>
         </Switch>

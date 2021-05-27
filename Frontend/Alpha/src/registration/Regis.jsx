@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import inlogo from "../registration/img/in.svg";
 import uplogo from "../registration/img/up.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../firebase";
 import { register, signin } from "../actions/userActions";
 import LoadingDiv from "../components/LoadingDiv";
 import MessageDiv from "../components/MessageDiv";
@@ -51,19 +50,7 @@ function Regis() {
 
   const Register = (e) => {
     e.preventDefault();
-    //firebase register, where auth is the information about the user
-    // auth
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then((auth) => {
-    //     console.log(auth);
-    //     if (auth) {
-    //       auth.user.updateProfile({
-    //         displayName: username,
-    //       });
-    //       history.push("/");
-    //     }
-    //   })
-    //   .catch((error) => alert(error.message));
+
     if (regpassword !== regConfirmpassword) {
       alert("Password should match with Confirm Password");
     } else {

@@ -3,10 +3,8 @@ import "../designs/subtotal.css";
 import CurrencyFormat from "react-currency-format";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-// import { useStateValue } from "../StateProvider";
 
 function Subtotal() {
-  // const [{ basket }] = useStateValue();
   let history = useHistory();
 
   const productCart = useSelector((state) => state.productCart);

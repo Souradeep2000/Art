@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import "../designs/checkoutProduct.css";
-//import { useStateValue } from "../StateProvider";
 import Rating from "./Rating";
-//import { db } from "../firebase";
 import { saveState } from "../localStorage";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function CheckoutProduct(props) {
-  //const [{ basket }, dispatch] = useStateValue();
   const dispatch = useDispatch();
   const productCart = useSelector((state) => state.productCart);
   const { basket } = productCart;
@@ -42,7 +40,9 @@ function CheckoutProduct(props) {
   };
   return (
     <div className="checkoutProduct">
-      <img className="checkoutProduct__image" src={props.src} />
+      <Link to={`/product/${props._id}`}>
+        <img className="checkoutProduct__image" src={props.src} />
+      </Link>
       <div className="checkoutProduct__info">
         <p className="checkoutProduct__title">
           {props.title}

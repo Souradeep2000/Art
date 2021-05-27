@@ -1,12 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CheckoutSteps from "./CheckoutSteps";
+import axios from "../axios";
 import { Link, useHistory, useParams } from "react-router-dom";
 import "../designs/placeOrder.css";
 import PaymentIcon from "@material-ui/icons/Payment";
-import { detailsOrder } from "../actions/orderActions";
+import { detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingDiv from "./LoadingDiv";
 import MessageDiv from "./MessageDiv";
+import { PayPalButton } from "react-paypal-button-v2";
+import { ORDER_PAY_RESET } from "../constants/orderConstants";
+
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
 
 function Ordered() {
   const dispatch = useDispatch();
@@ -18,9 +34,89 @@ function Ordered() {
   const { id } = useParams();
   const orderId = id;
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const {
+    error: errorPay,
+    success: successPay,
+    loading: loadingPay,
+  } = orderPay;
+
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(payOrder(order, paymentResult));
+  };
+
+  //razorpay implementation
+  async function displayRazorpay() {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    const { data } = await axios.post(
+      `/razorpay?id=${orderId}&value=${userInfo.token}`
+    );
+
+    const { cid } = await axios.get("/api/config/razorpay");
+
+    const options = {
+      key: cid,
+      currency: data.currency,
+      amount: data.amount,
+      order_id: data._id,
+      name: "Art Aficionado",
+      description: "Please do not share your account details with anyone.",
+      image: "...",
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
+        successPaymentHandler();
+      },
+      prefill: {
+        name: "Souradeep Gharami",
+        email: "souradeepgharami2000@gmail.com",
+        phone_number: "9062027362",
+      },
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
+  const [sdkReady, setSdkReady] = useState(false);
+
   useEffect(() => {
-    dispatch(detailsOrder(orderId));
-  }, [dispatch, orderId]);
+    const addPayPalScript = async () => {
+      const { data } = await axios.get("/api/config/paypal");
+
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=INR`;
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      }; //when script is downloaded in this page and ready to use
+      document.body.appendChild(script); //added script at the buttom of the body as a last child
+    };
+
+    if (!order || successPay || (order && order._id !== orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch(detailsOrder(orderId));
+    } else {
+      if (!order.isPaid) {
+        if (!window.paypal) {
+          addPayPalScript(); //if i havenot called paypal(not loaded)
+        } else {
+          setSdkReady(true); //already loaded paypal
+        }
+      }
+    }
+  }, [dispatch, orderId, order, sdkReady]);
 
   return loading ? (
     <LoadingDiv />
@@ -32,7 +128,7 @@ function Ordered() {
         <div className="col-lg-8 order-col">
           <ul>
             <li>
-              <h2>
+              <h2 className="order-id">
                 <strong>Order-ref:</strong> {order._id}
               </h2>
             </li>
@@ -150,6 +246,43 @@ function Ordered() {
                   </div>
                 </div>
               </li>
+              {!order.isPaid && (
+                <li>
+                  {!sdkReady ? (
+                    <LoadingDiv></LoadingDiv>
+                  ) : (
+                    <>
+                      {errorPay && (
+                        <MessageDiv status="danger">{errorPay}</MessageDiv>
+                      )}
+                      {loadingPay && <LoadingDiv />}
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        currency="INR"
+                        onSuccess={successPaymentHandler}
+                      />
+                    </>
+                  )}
+                </li>
+              )}
+              <li style={{ display: "flex", justifyContent: "center" }}>
+                <strong>OR</strong>
+              </li>
+              {!order.isPaid ? (
+                <li>
+                  {errorPay && (
+                    <MessageDiv status="danger">{errorPay}</MessageDiv>
+                  )}
+                  {loadingPay && <LoadingDiv />}
+                  <div className="order-but">
+                    <button id="rzp-button1" onClick={displayRazorpay}>
+                      Razor Pay
+                    </button>
+                  </div>
+                </li>
+              ) : (
+                <div></div>
+              )}
             </ul>
           </div>
         </div>

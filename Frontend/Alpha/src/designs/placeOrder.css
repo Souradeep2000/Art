@@ -106,4 +106,10 @@
     height: 35px;
     font-size: 0.7rem;
   }
+  .order-id {
+    font-size: large;
+  }
+}
+.order-but #rzp-button1 {
+  flex-grow: 1;
 }

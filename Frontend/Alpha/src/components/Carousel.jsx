@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "../designs/slider.css";
 import Slider from "react-slick";
 import Card from "./Card";
-import { db } from "../firebase";
 import axios from "../axios";
 
 function createCard(individualCard) {
@@ -47,12 +46,15 @@ function Carousel() {
     fetchCarousel();
   }, [isMountedRef]);
 
-  var settings = {
+  const settings = {
+    className: "slider variable-width",
     dots: true,
     infinite: true,
+    centerMode: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
+    variableWidth: true,
   };
 
   return (

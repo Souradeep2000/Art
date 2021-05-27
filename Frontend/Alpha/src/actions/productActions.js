@@ -12,10 +12,9 @@ export const listProducts = () => async (dispatch) => {
   dispatch({
     type: PRODUCT_LIST_REQUEST,
   });
-  //getting data from backend
+
   try {
-    const response = await axios.get("/cardUpload"); //sending ajax request to get the list of products
-    //console.log("home ", response);
+    const response = await axios.get("/cardUpload");
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: response.data });
   } catch (err) {
     dispatch({ type: PRODUCT_LIST_FAIL, payload: err.message });
@@ -26,7 +25,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
   try {
     const response = await axios.get(`/cardUpload/${productId}`);
-    //console.log("payload ", response);
+
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: response.data });
   } catch (err) {
     dispatch({

@@ -6,30 +6,20 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import "../designs/navbar.css";
 import { Link } from "react-router-dom";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-// import { useStateValue } from "../StateProvider";
-//import { db } from "../firebase";
+import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowDropDownCircleOutlinedIcon from "@material-ui/icons/ArrowDropDownCircleOutlined";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import { signout } from "../actions/userActions";
+import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import CreateIcon from "@material-ui/icons/Create";
 
 function Navbar() {
-  //const [{ basket }] = useStateValue();
   const productCart = useSelector((state) => state.productCart);
   const { basket } = productCart;
-  // const [cartItems, Setcartitems] = useState([]);
-  // const getCartItems = () => {
-  //   db.collection("cartItems").onSnapshot((snapshot) => {
-  //     const tempItems = snapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       card: doc.data(),
-  //     }));
-  //     Setcartitems(tempItems);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getCartItems();
-  // }, []);
+
   const dispatch = useDispatch();
 
   const userSignin = useSelector((state) => state.userSignin);
@@ -75,13 +65,27 @@ function Navbar() {
         {userInfo ? (
           <div className="nav-item profile">
             <Link to="#">
+              <PersonOutlineIcon className="PersonOutlineIcon" />{" "}
               {userInfo.name}
               <ArrowDropDownCircleOutlinedIcon className="ArrowDropDownCircleOutlinedIcon" />
             </Link>
-            <ul className="profile-content">
-              <Link to="#signout" onClick={signoutHandler}>
-                <ExitToAppRoundedIcon /> Sign Out
-              </Link>
+            <ul className="profile-content" style={{ listStyleType: "none" }}>
+              <li>
+                <Link to="/orderhistory">
+                  <CardGiftcardIcon /> Orders
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/profileup">
+                  <PersonOutlineIcon /> My Profile
+                </Link>
+              </li>
+              <li>
+                <Link to="#signout" onClick={signoutHandler}>
+                  <ExitToAppRoundedIcon /> Sign Out
+                </Link>
+              </li>
             </ul>
           </div>
         ) : (
@@ -91,7 +95,36 @@ function Navbar() {
             </Link>
           </div>
         )}
+
+        {userInfo && userInfo.isAdmin && (
+          <div className="nav-item profile">
+            <Link to="#admin">
+              <VerifiedUserIcon className="VerifiedUserIcon" />
+              ADMIN
+              <ArrowDropDownCircleOutlinedIcon className="ArrowDropDownCircleOutlinedIcon" />
+            </Link>
+            <ul className="profile-content" style={{ listStyleType: "none" }}>
+              <li>
+                <Link to="/dashboard">
+                  <CreateIcon /> Dashboard
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/productlist">
+                  <PersonOutlineIcon /> Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/userlist">
+                  <ContactPhoneIcon /> Users
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
+
       <Link to="/checkout">
         <div className="cart">
           <ShoppingBasketIcon />

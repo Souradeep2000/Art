@@ -29,7 +29,6 @@ function Singlecard() {
   }, [dispatch, productId]);
 
   useEffect(() => {
-    console.log("basket>>>>>", basket);
     saveState(basket);
   }, [basket]);
 

@@ -15,7 +15,6 @@
 .profile-content {
   position: absolute;
   display: none;
-  text-align: center;
   border: 1px #ffc107 solid;
   min-width: 12rem;
   padding: 1rem;
@@ -32,6 +31,9 @@
 }
 .PersonOutlineIcon {
   color: #ffc107;
+}
+.VerifiedUserIcon {
+  color: #20a020;
 }
 .profile:hover .profile-content {
   display: grid;

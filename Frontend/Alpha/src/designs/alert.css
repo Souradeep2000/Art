@@ -17,6 +17,10 @@
   color: #a02020;
   background-color: #ffe0e0e0;
 }
+.mess-success {
+  color: #20a020;
+  background-color: #eeffe0;
+}
 .loading {
   display: flex;
   align-items: center;

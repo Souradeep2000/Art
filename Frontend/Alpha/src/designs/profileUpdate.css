@@ -1,0 +1,183 @@
+.update-dabba {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 7rem;
+  padding: 0 2rem;
+}
+.img {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.img img {
+  width: 500px;
+}
+
+.update-container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar {
+  width: 100px;
+}
+
+.update-container form {
+  display: flex;
+  justify-content: center;
+  width: 360px;
+}
+.update-container form h2 {
+  font-size: 2.9rem;
+  text-transform: uppercase;
+  margin: 15px 0;
+  color: #333;
+}
+.input_div {
+  display: grid;
+  position: relative;
+  grid-template-columns: 7% 93%;
+  margin: 25px 0;
+  padding: 5px 0;
+  border-bottom: 2px solid #d9d9d9;
+}
+.input_div:after,
+.input_div:before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: #007bff;
+  transition: 0.3s;
+}
+.input_div:after {
+  right: 50%;
+}
+.input_div:before {
+  left: 50%;
+}
+
+.input_div.focus .i #ic {
+  color: #007bff;
+}
+.input_div.focus ::placeholder {
+  top: -5px;
+  font-size: 15px;
+}
+
+.input_div.focus:after,
+.input_div.focus:before {
+  width: 50%;
+}
+
+.input_div.one {
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+.input_div.two {
+  margin-bottom: 2px;
+}
+.input_div.three {
+  margin-bottom: 2px;
+}
+.input_div.four {
+  margin-bottom: 2px;
+}
+
+.i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.i #ic {
+  color: #d9d9d9;
+  transition: 0.3s;
+}
+
+.input_div > div {
+  position: relative;
+  height: 45px;
+}
+.input_div ::placeholder {
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 18px;
+  transform: 0.3s;
+}
+.__input {
+  left: 0;
+  top: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: "Poppins", sans-serif;
+  padding: 0.5rem 0.7rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+.update_button {
+  display: block;
+  width: 70%;
+  height: 50px;
+  border-radius: 25px;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  background-image: linear-gradient(to right, #4481eb, #04befe, #4481eb);
+  cursor: pointer;
+  color: #fff;
+  background-size: 200%;
+  transition: 0.5s;
+}
+.update_button:hover {
+  background-position: right;
+}
+
+@media screen and (max-width: 1050px) {
+  .update-dabba {
+    grid-gap: 5rem;
+  }
+  .update_button {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .update-container form {
+    width: 290px;
+  }
+  .update_button {
+    width: 100%;
+  }
+  .update-container form h2 {
+    font-size: 2.4rem;
+    margin: 8px;
+  }
+  .img img {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .img {
+    display: none;
+  }
+  .update-dabba {
+    grid-template-columns: 1fr;
+  }
+  .update_button {
+    width: 100%;
+  }
+  .update-container {
+    justify-content: center;
+  }
+}

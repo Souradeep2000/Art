@@ -13,3 +13,10 @@
 .slick-arrow:active {
   background-color: #ffc107 !important;
 }
+.slick-slide {
+  margin: 0 13px;
+}
+/* the parent */
+.slick-list {
+  margin: 0 -13px;
+}
