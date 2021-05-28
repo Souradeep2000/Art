@@ -2,6 +2,12 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_FORGET_PASSWORD_FAIL,
+  USER_FORGET_PASSWORD_REQUEST,
+  USER_FORGET_PASSWORD_SUCCESS,
+  USER_NEW_PASSWORD_FAIL,
+  USER_NEW_PASSWORD_REQUEST,
+  USER_NEW_PASSWORD_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -37,6 +43,32 @@ export const userRegisterReducer = (state = {}, action) => {
     case USER_REGISTER_SUCCESS:
       return { loading: false, userDetails: action.payload };
     case USER_REGISTER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userNewPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_NEW_PASSWORD_REQUEST:
+      return { loading: true };
+    case USER_NEW_PASSWORD_SUCCESS:
+      return { loading: false, newPass: action.payload };
+    case USER_NEW_PASSWORD_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userForgetPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_FORGET_PASSWORD_REQUEST:
+      return { loading: true };
+    case USER_FORGET_PASSWORD_SUCCESS:
+      return { loading: false, userPasswordRecovery: action.payload };
+    case USER_FORGET_PASSWORD_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

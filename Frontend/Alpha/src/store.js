@@ -8,6 +8,8 @@ import { loadState } from "./localStorage";
 import { cartDetailsReducer } from "./reducers/cartReducers";
 import {
   userDetailsReducer,
+  userForgetPasswordReducer,
+  userNewPasswordReducer,
   userRegisterReducer,
   userSigninReducer,
   userUpdateProfileReducer,
@@ -47,6 +49,8 @@ const reducer = combineReducers({
   orderListItems: orderListItemsReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userForgetPassword: userForgetPasswordReducer,
+  userNewPassword: userNewPasswordReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

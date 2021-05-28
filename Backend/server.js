@@ -6,11 +6,14 @@ import User from "./models/userModel.js";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import expressAsyncHandler from "express-async-handler";
-import { generateToken, isTokenAuth } from "./utils.js";
+import { generateToken, isTokenAuth, forgotPasswordToken } from "./utils.js";
 import Order from "./models/orderModels.js";
 import Razorpay from "razorpay";
 import axios from "axios";
 import shortid from "shortid";
+import nodemailer from "nodemailer";
+import sendgridTransport from "nodemailer-sendgrid-transport";
+import crypto from "crypto";
 
 dotenv.config();
 
@@ -25,6 +28,13 @@ mongoose.connect(process.env.MONGODB_URL, {
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
+// NODEMAILER
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: { api_key: process.env.SEND_GRID_KEY },
+  })
+);
 
 // RAZORPAY
 const razorpay = new Razorpay({
@@ -169,6 +179,57 @@ app.post(
   })
 );
 
+// Forgot Password
+app.post(
+  "/api/users/resetpassword",
+  expressAsyncHandler(async (req, res) => {
+    const findUser = await User.findOne({ email: req.body.email });
+    if (findUser) {
+      const legit = forgotPasswordToken(findUser);
+
+      res.send({ _id: findUser._id, email: findUser.email });
+      transporter.sendMail({
+        to: findUser.email,
+        from: "souradeepgharami2000@gmail.com",
+        subject: "Forgot Password",
+        html: `<h1>Hi ${findUser.name}, the reset password link is only valid for 10 minutes only!</h1>
+            <p>You are requested to change your password within this interval.</p>
+            <h4>Click <a href="http://localhost:3000/reset/${findUser._id}/${legit}">here</a> to reset your password</h4>
+            `,
+      });
+
+      return;
+    }
+    res.status(401).send({
+      message: "User with this email doesn't exists",
+    });
+  })
+);
+
+app.post(
+  "/api/users/newpassword",
+  isTokenAuth,
+  expressAsyncHandler(async (req, res) => {
+    console.log(req.body._id);
+    const user = await User.findById(req.body._id);
+    if (user) {
+      user.password = bcrypt.hashSync(req.body.password, 11);
+      const updatedUser = await user.save();
+      res.send({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        admin: updatedUser.isAdmin,
+        token: generateToken(updatedUser),
+      });
+      return;
+    }
+    res.status(401).send({
+      message: "Try again session has been expired",
+    });
+  })
+);
+
 //register
 app.post(
   "/api/users/register",
@@ -186,6 +247,12 @@ app.post(
         email: createdUser.email,
         isAdmin: createdUser.isAdmin,
         token: generateToken(createdUser),
+      });
+      transporter.sendMail({
+        to: createdUser.email,
+        from: "souradeepgharami2000@gmail.com",
+        subject: "Registered successfully",
+        html: `<h1>Welcome ${createdUser.name} to Art-Aficionado</h1>`,
       });
     } else {
       res.status(500).send({ message: "Fill all the details correct" });

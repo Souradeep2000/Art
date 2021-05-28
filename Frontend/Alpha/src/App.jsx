@@ -14,6 +14,7 @@ import Ordered from "./components/Ordered";
 import OrderHistory from "./components/OrderHistory";
 import ProfileUpdate from "./registration/ProfileUpdate";
 import PrivateRoute from "./components/PrivateRoute";
+import ForgotPassword from "./registration/ForgotPassword";
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
             path="/profileup"
             component={ProfileUpdate}
           ></PrivateRoute>
+
+          <Route path="/reset/:id/:token">
+            <ForgotPassword />
+          </Route>
 
           <Route path="/product/:id">
             <Navbar />

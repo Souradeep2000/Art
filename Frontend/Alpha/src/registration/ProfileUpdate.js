@@ -96,7 +96,7 @@ function ProfileUpdate() {
           {loading ? (
             <LoadingDiv></LoadingDiv>
           ) : error ? (
-            <MessageDiv status={danger}> {error}</MessageDiv>
+            <MessageDiv status="danger"> {error}</MessageDiv>
           ) : (
             <>
               {loadingUpdate && <LoadingDiv></LoadingDiv>}

@@ -3,6 +3,12 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_FORGET_PASSWORD_FAIL,
+  USER_FORGET_PASSWORD_REQUEST,
+  USER_FORGET_PASSWORD_SUCCESS,
+  USER_NEW_PASSWORD_FAIL,
+  USER_NEW_PASSWORD_REQUEST,
+  USER_NEW_PASSWORD_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -47,7 +53,7 @@ export const register = (name, email, password) => async (dispatch) => {
       email,
       password,
     });
-    console.log("error is ", response.data);
+
     dispatch({ type: USER_REGISTER_SUCCESS, payload: response.data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: response.data });
     localStorage.setItem("userInfo", JSON.stringify(response.data));
@@ -59,6 +65,46 @@ export const register = (name, email, password) => async (dispatch) => {
           ? err.response.data.message
           : err.message,
     });
+  }
+};
+
+export const newPasswordSet = (_id, token, password) => async (dispatch) => {
+  dispatch({
+    type: USER_NEW_PASSWORD_REQUEST,
+    payload: { _id, token, password },
+  });
+  try {
+    const { data } = await axios.post(
+      "/api/users/newpassword",
+      { _id, token, password },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    dispatch({ type: USER_NEW_PASSWORD_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({ type: USER_NEW_PASSWORD_FAIL, payload: message });
+  }
+};
+
+export const forgetpassword = (email) => async (dispatch) => {
+  dispatch({ type: USER_FORGET_PASSWORD_REQUEST, payload: { email } });
+  try {
+    const { data } = await axios.post("/api/users/resetpassword", { email });
+    dispatch({ type: USER_FORGET_PASSWORD_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({ type: USER_FORGET_PASSWORD_FAIL, payload: message });
   }
 };
 

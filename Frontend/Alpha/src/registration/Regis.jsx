@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import inlogo from "../registration/img/in.svg";
 import uplogo from "../registration/img/up.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { register, signin } from "../actions/userActions";
+import { forgetpassword, register, signin } from "../actions/userActions";
 import LoadingDiv from "../components/LoadingDiv";
 import MessageDiv from "../components/MessageDiv";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
@@ -26,6 +26,13 @@ function Regis() {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { loading, error, userInfo } = userSignin;
+
+  const userForgetPassword = useSelector((state) => state.userForgetPassword);
+  const {
+    loading: loadingForget,
+    error: errorForget,
+    userPasswordRecovery,
+  } = userForgetPassword;
 
   const dispatch = useDispatch();
 
@@ -50,11 +57,14 @@ function Regis() {
 
   const Register = (e) => {
     e.preventDefault();
-
-    if (regpassword !== regConfirmpassword) {
-      alert("Password should match with Confirm Password");
+    if (regpassword.length > 6) {
+      if (regpassword !== regConfirmpassword) {
+        alert("Password should match with Confirm Password");
+      } else {
+        dispatch(register(username, regemail, regpassword));
+      }
     } else {
-      dispatch(register(username, regemail, regpassword));
+      alert("Password is too weak to set");
     }
   };
 
@@ -72,6 +82,28 @@ function Regis() {
   const handleIn = () => {
     setSignup(false);
   };
+
+  // forgot password
+  const forgotPasswordHandler = () => {
+    if (!email) {
+      alert("Please enter your email");
+    } else {
+      dispatch(forgetpassword(email));
+    }
+  };
+
+  useEffect(() => {
+    if (userPasswordRecovery) {
+      setTimeout(() => {
+        history.push(redirect);
+      }, 3000);
+    }
+    if (errorForget) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+  }, [history.push, redirect, userPasswordRecovery, errorForget]);
 
   return (
     <div>
@@ -105,7 +137,19 @@ function Regis() {
                   onChange={(e) => Setpassword(e.target.value)}
                 />
               </div>
-
+              {loadingForget ? (
+                <LoadingDiv></LoadingDiv>
+              ) : errorForget ? (
+                <MessageDiv status="danger"> {errorForget}</MessageDiv>
+              ) : userPasswordRecovery ? (
+                <MessageDiv status="success">
+                  Pasword Rest link has been sent in your registered email
+                </MessageDiv>
+              ) : (
+                <Link to="#" onClick={forgotPasswordHandler}>
+                  <p className="social-text">forgot password?</p>
+                </Link>
+              )}
               <input
                 type="submit"
                 value="Login"
