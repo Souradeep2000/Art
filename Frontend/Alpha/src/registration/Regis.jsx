@@ -57,6 +57,10 @@ function Regis() {
 
   const Register = (e) => {
     e.preventDefault();
+    if (username.length < 5 || regemail.length < 10) {
+      return alert("Your name or email to short!");
+    }
+
     if (regpassword.length > 6) {
       if (regpassword !== regConfirmpassword) {
         alert("Password should match with Confirm Password");

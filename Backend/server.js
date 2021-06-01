@@ -13,7 +13,9 @@ import axios from "axios";
 import shortid from "shortid";
 import nodemailer from "nodemailer";
 import sendgridTransport from "nodemailer-sendgrid-transport";
-import crypto from "crypto";
+import httpServer from "http";
+import { Server } from "socket.io";
+import Comment from "./models/commentModel.js";
 
 dotenv.config();
 
@@ -23,10 +25,62 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const http = httpServer.createServer(app);
+const io = new Server(http, { cors: { origin: "*" } });
+
+// socket-io
+let users = [];
+
+io.on("connection", (socket) => {
+  console.log(socket.id + "connected.");
+
+  socket.on("joinRoom", (productId) => {
+    const user = { userId: socket.id, room: productId };
+
+    const check = users.every((user) => user.userId !== socket.id);
+
+    if (check) {
+      users.push(user);
+      socket.join(user.room);
+    } else {
+      users.map((singleUser) => {
+        if (singleUser.userId === socket.id) {
+          if (singleUser.room !== productId) {
+            socket.leave(singleUser.room);
+            socket.join(productId);
+            singleUser.room = productId;
+          }
+        }
+      });
+    }
+  });
+
+  socket.on("createComment", async (msg) => {
+    const { username, content, product_id, rating, user_id, createdAt } = msg;
+
+    const newComment = new Comment({
+      username,
+      content,
+      product_id,
+      rating,
+      user_id,
+      createdAt,
+    });
+    await newComment.save();
+
+    io.to(newComment.product_id).emit("sendCommentToClient", newComment);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(socket.id + "disconnected");
+  });
+});
+
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 // NODEMAILER
@@ -47,7 +101,7 @@ app.post("/razorpay", async (req, res) => {
   const token = req.query.value;
 
   const payment_capture = 1;
-  let val = 0;
+  var val = 0;
   const currency = "INR";
 
   try {
@@ -58,13 +112,13 @@ app.post("/razorpay", async (req, res) => {
       }
     );
     //console.log("order details >>>>>", data);
-    val = data.totalPrice;
+    val = data.totalPrice * 100;
   } catch (error) {
     console.log(error);
   }
-  console.log(val);
+
   const options = {
-    amount: val * 100,
+    amount: val.toFixed(),
     currency,
     receipt: shortid.generate(),
     payment_capture,
@@ -369,7 +423,77 @@ app.put(
   })
 );
 
+// update product rating when user comment
+app.patch(
+  "/api/product/reviews/:id",
+  isTokenAuth,
+  expressAsyncHandler(async (req, res) => {
+    const rating = req.body.rating;
+    if (rating && rating !== 0) {
+      const product = await dbCards.findById({ _id: req.params.id });
+      if (product) {
+        let num = product.numReviews;
+        let rate = product.star;
+        await dbCards.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            star: rate + rating,
+            numReviews: num + 1,
+          }
+        );
+        res.send({ rating });
+      } else {
+        res.status(404).send({ message: "Product not found" });
+      }
+
+      return;
+    }
+    res.status(401).send({ message: "You cannot rate this product" });
+  })
+);
+
+//infinite scrolling feature
+
+class APIfeatures {
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+  sorting() {
+    this.query = this.query.sort("-createdAt");
+    return this;
+  }
+  pagination() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 5;
+    const skip = (page - 1) * limit;
+    this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
+}
+
+// get all comments associated with a product
+
+app.get(
+  "/api/comments/:id",
+  expressAsyncHandler(async (req, res) => {
+    const features = new APIfeatures(
+      Comment.find({ product_id: req.params.id }),
+      req.query
+    )
+      .sorting()
+      .pagination();
+
+    const comments = await features.query;
+    if (comments) {
+      res.send({ result: comments.length, comments });
+    } else {
+      res.status(404).send({ message: "Comments not found" });
+    }
+  })
+);
+
 const port = process.env.PORT;
-app.listen(port, function () {
+http.listen(port, function () {
   console.log(`server is up and running on port : ${port}`);
 });

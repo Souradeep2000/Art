@@ -1,0 +1,111 @@
+.comment-box {
+  margin-top: 20px;
+}
+.comments {
+  max-width: 75%;
+  margin: auto;
+  padding: 20px;
+  outline: 1px solid grey;
+}
+
+.comments h2 {
+  text-align: left;
+}
+@media screen and (max-width: 630px) {
+  .comments h2 {
+    font-size: 2.5rem;
+  }
+  .comments {
+    max-width: 92%;
+  }
+}
+
+.reviews {
+  width: 115px;
+  margin: 10px 0;
+}
+
+.reviews input {
+  display: none;
+}
+
+.reviews label {
+  color: #999;
+  margin: 5px 0;
+  padding-right: 5px;
+  cursor: pointer;
+  float: right;
+}
+
+.reviews input:not(:checked) ~ label:hover,
+.reviews input:not(:checked) ~ label:hover ~ label {
+  color: #ffc107;
+}
+
+.reviews input:checked ~ label {
+  color: #ffc107;
+}
+
+.comment_form {
+  margin: 10px 0;
+}
+.comment_form button {
+  background-color: #007bff;
+  border: 2px solid #999;
+  border-radius: 10px;
+  color: white;
+  padding: 15px 0;
+  width: 140px;
+  margin: 20px 0;
+  outline: 0;
+}
+.comment_form button:hover {
+  background-color: #343a40;
+}
+
+/* Allcomment card */
+.comment_card {
+  border: 1.5px solid #999;
+  border-radius: 10px;
+  background: whitesmoke;
+  padding: 20px;
+  margin: 15px 0;
+}
+.comment_card h3 {
+  font-family: cursive;
+  text-transform: capitalize;
+  color: royalblue;
+}
+.comment_card_row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.comment_card span {
+  margin-right: 10px;
+  font-size: small;
+}
+.comment_card p {
+  color: #444;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+
+.comment_card .nav_comment {
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment_card .nav_comment p {
+  color: #007bff;
+  padding-right: 10px;
+  text-transform: capitalize;
+  cursor: pointer;
+  font-size: small;
+}
+
+.comment_card .nav_comment p:hover {
+  color: #343a40;
+}

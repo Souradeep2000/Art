@@ -107,6 +107,9 @@ function Ordered() {
     if (!order || successPay || (order && order._id !== orderId)) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(detailsOrder(orderId));
+      if (successPay) {
+        window.location.reload();
+      }
     } else {
       if (!order.isPaid) {
         if (!window.paypal) {
@@ -116,7 +119,7 @@ function Ordered() {
         }
       }
     }
-  }, [dispatch, orderId, order, sdkReady]);
+  }, [dispatch, orderId, order, sdkReady, successPay]);
 
   return loading ? (
     <LoadingDiv />

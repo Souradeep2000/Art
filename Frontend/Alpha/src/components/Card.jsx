@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-// import { useStateValue } from "../StateProvider";
-// import { db } from "../firebase";
 import "../designs/card.css";
 import Rating from "./Rating";
 import { saveState } from "../localStorage";
@@ -8,8 +6,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 function Card(props) {
-  //const [{ basket }, dispatch] = useStateValue();
-  // console.log("this is my basket >>>", props);
   const dispatch = useDispatch();
   const productCart = useSelector((state) => state.productCart);
   const { basket } = productCart;

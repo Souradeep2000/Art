@@ -20,6 +20,10 @@ import {
   orderListItemsReducer,
   orderPayReducer,
 } from "./reducers/orderReducers";
+import {
+  commentListReducer,
+  commentPostReducer,
+} from "./reducers/commentReducers";
 
 const initialState = {
   userSignin: {
@@ -51,6 +55,8 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   userForgetPassword: userForgetPasswordReducer,
   userNewPassword: userNewPasswordReducer,
+  commentPost: commentPostReducer,
+  commentList: commentListReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

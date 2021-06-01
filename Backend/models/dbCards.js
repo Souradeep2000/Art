@@ -7,7 +7,8 @@ const cardSchema = mongoose.Schema(
     p: { type: String, required: true },
     a: String,
     price: { type: Number, required: true },
-    star: { type: Number, required: true },
+    star: { type: Number, default: 0 },
+    numReviews: { type: Number, default: 0 },
   },
   {
     timestamps: true,

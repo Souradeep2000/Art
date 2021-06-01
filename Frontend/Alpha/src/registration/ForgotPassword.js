@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import profile from "./img/profile.svg";
 import forgetPass from "./img/forgetPass.svg";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "../designs/profileUpdate.css";
 import { useDispatch, useSelector } from "react-redux";
-
 import LoadingDiv from "../components/LoadingDiv";
 import MessageDiv from "../components/MessageDiv";
 import { useHistory, useParams } from "react-router";
