@@ -37,7 +37,7 @@ function Subtotal() {
           <>
             <p>
               Subtotal ({getCount()} items):
-              <strong style={{ color: " #256eff" }}>{value}</strong>
+              <strong style={{ color: " #20a020" }}>{value}</strong>
             </p>
             <small className="subtotal__gift">
               <input type="checkbox" />

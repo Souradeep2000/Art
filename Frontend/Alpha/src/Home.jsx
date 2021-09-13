@@ -21,6 +21,7 @@ function createCard(individualCard) {
       a={individualCard.a}
       price={individualCard.price}
       star={individualCard.star}
+      numReviews={individualCard.numReviews}
     />
   );
 }
@@ -49,7 +50,7 @@ function Home() {
           </div>
 
           <div className="home__container">
-            <div className="home__row">{card.slice(0, 5).map(createCard)}</div>
+            <div className="home__row">{card.slice(0, 7).map(createCard)}</div>
           </div>
 
           <Carousel />

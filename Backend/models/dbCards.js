@@ -5,7 +5,7 @@ const cardSchema = mongoose.Schema(
     src: { type: String, required: true },
     title: { type: String, required: true, unique: true },
     p: { type: String, required: true },
-    a: String,
+    category: { type: String, required: true },
     price: { type: Number, required: true },
     star: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },

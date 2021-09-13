@@ -17,6 +17,7 @@ function createCard(individualCard) {
       a={individualCard.a}
       price={individualCard.price}
       star={individualCard.star}
+      numReviews={individualCard.numReviews}
     />
   );
 }
@@ -39,7 +40,7 @@ function Carousel() {
     async function fetchCarousel() {
       const response = await axios.get("/cardUpload");
       if (isMountedRef.current) {
-        Setcarouselcard(response.data);
+        Setcarouselcard(response.data.products);
       }
       return response;
     }
@@ -59,7 +60,7 @@ function Carousel() {
 
   return (
     <div className="container" style={{ marginBottom: "40px" }}>
-      <Slider {...settings}>{carouselCard.slice(5, 10).map(createCard)}</Slider>
+      <Slider {...settings}>{carouselCard.slice(7).map(createCard)}</Slider>
     </div>
   );
 }

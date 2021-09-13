@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./registration/fontawesome";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Home";
@@ -14,7 +14,10 @@ import Ordered from "./components/Ordered";
 import OrderHistory from "./components/OrderHistory";
 import ProfileUpdate from "./registration/ProfileUpdate";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
 import ForgotPassword from "./registration/ForgotPassword";
+import AddProduct from "./components/AddProduct";
+import Filters from "./components/Filters";
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
       <div className="app">
         <Switch>
           <Route exact path="/">
+            <Filters />
             <Home />
           </Route>
 
@@ -38,6 +42,17 @@ function App() {
             path="/profileup"
             component={ProfileUpdate}
           ></PrivateRoute>
+
+          <AdminRoute
+            exact
+            path="/addproduct"
+            component={AddProduct}
+          ></AdminRoute>
+          <AdminRoute
+            exact
+            path="/editproduct/:id"
+            component={AddProduct}
+          ></AdminRoute>
 
           <Route path="/reset/:id/:token">
             <ForgotPassword />

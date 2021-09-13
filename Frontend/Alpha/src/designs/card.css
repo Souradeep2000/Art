@@ -7,15 +7,19 @@
 }
 @media screen and (max-width: 620px) {
   .product {
-    width: 100%;
+    width: fit-content;
     display: flex;
     justify-content: center;
+  }
+  .card-text {
+    display: none;
   }
 }
 .product {
   margin-top: 10px;
   margin-bottom: 10px;
   transition: 0.3s;
+  border: 1px solid palevioletred;
 }
 .product:hover {
   transform: scale(1.05);
@@ -26,17 +30,24 @@
   align-items: center;
   justify-content: center;
 }
+.carding {
+  width: 50px;
+}
 .card-body {
   padding: 0px 5px 5px 5px;
 }
 .card-title {
   margin-bottom: 0px;
+  text-transform: capitalize;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: oblique;
+  font-weight: 700;
+  color: palevioletred;
 }
 .card-text {
   margin-bottom: 0.3rem;
 }
 .product_rating {
-  margin-bottom: 0.3rem;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -55,4 +66,12 @@
   color: black;
   border: 1px solid;
   border-radius: 5px;
+}
+
+.card-img-top {
+  /* width: 285px; */
+  height: 200px;
+  width: 100%;
+  padding: 5px 10px 0px 10px;
+  border-radius: 8%;
 }

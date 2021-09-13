@@ -111,7 +111,7 @@ function Singlecard() {
                   <div className="img-item">
                     <Link to="#">
                       <img
-                        src="https://scontent.fccu3-1.fna.fbcdn.net/v/t1.6435-9/182786553_320656522792810_3270474159293086348_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=UR0xPz-0HqgAX_R5t6F&_nc_ht=scontent.fccu3-1.fna&oh=ff56c0e8cf669efd0f40d272627212bb&oe=60C3925F"
+                        src="https://art-aficionado-direct-image.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2021-09-09+at+12.29.24+PM+(1).jpeg"
                         onClick={(e) => setcurrentimg(e.target.src)}
                       />
                     </Link>
@@ -119,7 +119,7 @@ function Singlecard() {
                   <div className="img-item">
                     <Link to="#">
                       <img
-                        src="https://scontent.fccu3-1.fna.fbcdn.net/v/t1.6435-9/183537694_320001719524957_4509994418637092481_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=zHqWvdshuE4AX9K3lP4&_nc_ht=scontent.fccu3-1.fna&oh=7190b6a9b302d864d8c3d90de45b8b9c&oe=60C16CFB"
+                        src="https://art-aficionado-direct-image.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2021-09-09+at+12.29.24+PM.jpeg"
                         onClick={(e) => setcurrentimg(e.target.src)}
                       />
                     </Link>
@@ -127,7 +127,7 @@ function Singlecard() {
                   <div className="img-item">
                     <Link to="#">
                       <img
-                        src="https://scontent.fccu3-1.fna.fbcdn.net/v/t1.6435-9/177766036_311576633700799_2785427880820087419_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=730e14&_nc_ohc=BCI1tCo0OVgAX-Q5nDv&_nc_ht=scontent.fccu3-1.fna&oh=56a3c5f2c97d57d4ac47925b72c5fdd3&oe=60C31523"
+                        src="https://art-aficionado-direct-image.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2021-09-09+at+12.29.25+PM+(1).jpeg"
                         onClick={(e) => setcurrentimg(e.target.src)}
                       />
                     </Link>
@@ -135,7 +135,7 @@ function Singlecard() {
                   <div className="img-item">
                     <Link to="#">
                       <img
-                        src="https://scontent.fccu3-1.fna.fbcdn.net/v/t1.6435-9/172649658_304546754403787_4363549573197020612_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=-p5ZeAzZzhkAX9Zv3hz&_nc_ht=scontent.fccu3-1.fna&oh=a059b586c6449ace8e8ce9bd7c38812e&oe=60C263FB"
+                        src="https://art-aficionado-direct-image.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2021-09-09+at+12.29.25+PM.jpeg"
                         onClick={(e) => setcurrentimg(e.target.src)}
                       />
                     </Link>

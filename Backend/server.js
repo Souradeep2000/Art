@@ -16,6 +16,7 @@ import sendgridTransport from "nodemailer-sendgrid-transport";
 import httpServer from "http";
 import { Server } from "socket.io";
 import Comment from "./models/commentModel.js";
+import { generateUploadURL, deleteUrl } from "./s3.js";
 
 dotenv.config();
 
@@ -32,7 +33,7 @@ const io = new Server(http, { cors: { origin: "*" } });
 let users = [];
 
 io.on("connection", (socket) => {
-  console.log(socket.id + "connected.");
+  // console.log(socket.id + "connected.");
 
   socket.on("joinRoom", (productId) => {
     const user = { userId: socket.id, room: productId };
@@ -71,9 +72,9 @@ io.on("connection", (socket) => {
     io.to(newComment.product_id).emit("sendCommentToClient", newComment);
   });
 
-  socket.on("disconnect", () => {
-    console.log(socket.id + "disconnected");
-  });
+  // socket.on("disconnect", () => {
+  //   console.log(socket.id + "disconnected");
+  // });
 });
 
 mongoose.connect(process.env.MONGODB_URL, {
@@ -155,26 +156,45 @@ app.get("/", function (req, res) {
 
 // for cards
 
-app.post("/cardUpload", function (req, res) {
-  const cardDetails = req.body;
-  dbCards.create(cardDetails, function (err, createddata) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(createddata);
-    }
-  });
-});
+app.post(
+  "/cardUpload",
+  isTokenAuth,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const { title, price, p, category, src } = req.body;
+      if (!src)
+        return res.status(400).send({ message: "Image upload is mandetory" });
 
-app.get("/cardUpload", function (req, res) {
-  dbCards.find(function (err, founddata) {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.send(founddata);
+      const product = new dbCards({
+        title: title.toLowerCase(),
+        price,
+        p,
+        category,
+        src,
+      });
+      await product.save();
+      res.send("created product");
+    } catch (err) {
+      res.status(500).send({ message: "Cannot create product" });
     }
-  });
-});
+  })
+);
+
+app.get(
+  "/cardUpload",
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const features = new APIfeatures(dbCards.find(), req.query)
+        .filtering()
+        .sorting();
+      const products = await features.query;
+
+      res.send({ result: products.length, products: products });
+    } catch (err) {
+      return res.status(500).send({ message: err.message });
+    }
+  })
+);
 
 app.get("/cardUpload/:id", function (req, res) {
   dbCards.findById({ _id: req.params.id }, function (err, founddata) {
@@ -185,6 +205,45 @@ app.get("/cardUpload/:id", function (req, res) {
     }
   });
 });
+
+app.put(
+  "/cardUpload/:id",
+  isTokenAuth,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const { title, price, p, category, src } = req.body;
+      if (!src)
+        return res.status(400).send({ message: "Image upload is mandetory" });
+
+      await dbCards.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          title: title.toLowerCase(),
+          price,
+          p,
+          category,
+          src,
+        }
+      );
+      res.send("Updated Product");
+    } catch (err) {
+      res.status(500).send({ message: "Cannot Update product" });
+    }
+  })
+);
+
+app.delete(
+  "/cardUpload/:id",
+  isTokenAuth,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      await dbCards.findByIdAndDelete(req.params.id);
+      res.send("Deleted Product");
+    } catch (err) {
+      res.status(500).send({ message: "Cannot Update product" });
+    }
+  })
+);
 
 // for every Users
 
@@ -452,22 +511,50 @@ app.patch(
   })
 );
 
-//infinite scrolling feature
+//infinite scrolling , sorting , filtering and finding  feature
 
 class APIfeatures {
   constructor(query, queryString) {
     this.query = query;
     this.queryString = queryString;
   }
-  sorting() {
-    this.query = this.query.sort("-createdAt");
-    return this;
-  }
+
   pagination() {
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 5;
+    const limit = this.queryString.limit * 1 || 3;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
+
+  filtering() {
+    const queryObj = { ...this.queryString }; //queryString = req.query
+    //console.log(queryObj);
+    const excludedFields = ["page", "sort", "limit"];
+    excludedFields.forEach((element) => delete queryObj[element]); //after search delete page
+    //console.log(queryObj);
+
+    let queryStr = JSON.stringify(queryObj);
+
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lt|lte|regex)\b/g,
+      (match) => "$" + match
+    );
+    //console.log({ queryStr });
+
+    //gte = greater than or equal , lte=less than or equal
+    this.query.find(JSON.parse(queryStr));
+    return this;
+  }
+
+  sorting() {
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(",").join("");
+
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query = this.query.sort("-createdAt");
+    }
     return this;
   }
 }
@@ -490,6 +577,24 @@ app.get(
     } else {
       res.status(404).send({ message: "Comments not found" });
     }
+  })
+);
+
+// get image from bucket
+app.get(
+  "/s3Url",
+  expressAsyncHandler(async (req, res) => {
+    const url = await generateUploadURL();
+    res.send({ url });
+  })
+);
+
+app.post(
+  "/s3Url",
+  expressAsyncHandler(async (req, res) => {
+    const imgName = req.body.images;
+    deleteUrl(imgName);
+    res.send("ok");
   })
 );
 

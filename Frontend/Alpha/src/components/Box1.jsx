@@ -19,21 +19,25 @@ function Box1() {
       </ol>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src="" className="d-block w-100" alt="..." />
+          <img src="" className="box-img" alt="..." />
           <div className="carousel-caption d-none d-md-block">
             <h5>First slide label</h5>
             <p>Some representative placeholder content for the first slide.</p>
           </div>
         </div>
         <div className="carousel-item">
-          <img src="..." className="d-block w-100" alt="..." />
+          <img
+            src="https://art-aficionado-direct-image.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2021-09-09+at+9.48.16+PM.jpeg"
+            className="box-img"
+            alt="..."
+          />
           <div className="carousel-caption d-none d-md-block">
             <h5>Second slide label</h5>
             <p>Some representative placeholder content for the second slide.</p>
           </div>
         </div>
         <div className="carousel-item">
-          <img src="..." className="d-block w-100" alt="..." />
+          <img src="https://art-aficionado-direct-image.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2021-09-09+at+10.30.05+PM.jpeg" className="box-img" alt="..." />
           <div className="carousel-caption d-none d-md-block">
             <h5>Third slide label</h5>
             <p>Some representative placeholder content for the third slide.</p>

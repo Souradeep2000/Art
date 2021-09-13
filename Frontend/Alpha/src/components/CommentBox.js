@@ -24,19 +24,17 @@ function CommentBox({ productId, socket, username, user_id, token }) {
 
     const createdAt = new Date().toISOString();
 
-    if (content !== "") {
-      if (rating !== 0) {
-        socket.emit("createComment", {
-          username,
-          content,
-          product_id: productId,
-          rating,
-          user_id,
-          createdAt,
-        });
-      } else {
-        return alert("Kindly rate this product to post your review");
-      }
+    if (rating !== 0 && content !== "") {
+      socket.emit("createComment", {
+        username,
+        content,
+        product_id: productId,
+        rating,
+        user_id,
+        createdAt,
+      });
+    } else if (content.length < 2) {
+      return alert("Kindly rate this product to post your review");
     }
 
     if (rating === 0) {

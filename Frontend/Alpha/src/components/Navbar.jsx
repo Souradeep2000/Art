@@ -111,7 +111,7 @@ function Navbar() {
               </li>
 
               <li>
-                <Link to="/productlist">
+                <Link to="/addproduct">
                   <PersonOutlineIcon /> Products
                 </Link>
               </li>

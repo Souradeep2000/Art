@@ -44,16 +44,12 @@ function CheckoutProduct(props) {
         <img className="checkoutProduct__image" src={props.src} />
       </Link>
       <div className="checkoutProduct__info">
-        <p className="checkoutProduct__title">
-          {props.title}
-          <br />
-          {props.p}
-        </p>
+        <p className="checkoutProduct__title">{props.title}</p>
 
         <div className="checkoutProduct__price">
           <div>
-            <small style={{ color: " #256eff" }}>₹</small>
-            <strong style={{ color: " #256eff" }}>{props.price}</strong>
+            <small style={{ color: " #20a020" }}>₹</small>
+            <strong style={{ color: " #20a020" }}>{props.price}</strong>
           </div>
 
           <div className="checkoutProduct__qty">
@@ -65,7 +61,7 @@ function CheckoutProduct(props) {
             </select>
           </div>
         </div>
-        <Rating star={props.star} />
+        <Rating star={props.star / props.numReviews} />
         <a className="btn btn-primary card-add" onClick={removeFromBasket}>
           Remove from Basket
         </a>

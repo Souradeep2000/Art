@@ -38,7 +38,7 @@ export const listComments = (productId, page) => async (dispatch) => {
 
   try {
     const response = await axios.get(
-      `/api/comments/${productId}?limit=${page * 5}`
+      `/api/comments/${productId}?limit=${page * 3}`
     );
     dispatch({ type: COMMENT_LIST_SUCCESS, payload: response.data });
   } catch (err) {

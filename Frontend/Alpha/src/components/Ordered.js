@@ -268,11 +268,12 @@ function Ordered() {
                   )}
                 </li>
               )}
-              <li style={{ display: "flex", justifyContent: "center" }}>
-                <strong>OR</strong>
-              </li>
+
               {!order.isPaid ? (
                 <li>
+                  <li style={{ display: "flex", justifyContent: "center" }}>
+                    <strong>OR</strong>
+                  </li>
                   {errorPay && (
                     <MessageDiv status="danger">{errorPay}</MessageDiv>
                   )}

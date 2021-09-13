@@ -1,5 +1,6 @@
 .checkoutProduct {
   display: flex;
+  width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
   padding-right: 10px;
@@ -21,7 +22,11 @@
 }
 .checkoutProduct__title {
   font-size: 17px;
-  font-weight: 600;
+  text-transform: capitalize;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: oblique;
+  font-weight: 700;
+  color: palevioletred;
 }
 .checkoutProduct__rating {
   display: flex;
@@ -39,4 +44,9 @@
 }
 .checkoutProduct__qty select:focus {
   outline: none;
+}
+@media screen and (min-width: 1000px) {
+  .checkoutProduct {
+    padding-left: 100px;
+  }
 }
