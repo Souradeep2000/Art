@@ -40,9 +40,9 @@ function Filters() {
   useEffect(() => {
     const getProducts = async () => {
       const res = await axios.get(
-        `/cardUpload?limit=${
-          page * 9
-        }&${category}&${sort}&title[regex]=${searchedText}`
+        `/cardUpload?limit=${page * 9}&${category}&${sort}&title[regex]=${
+          category ? " " : searchedText
+        }`
       );
       setProducts(res.data.products);
 
