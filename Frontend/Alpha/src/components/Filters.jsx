@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listSearch } from "../actions/searchAction";
 import axios from "../axios";
+import "../designs/filters.css";
 
 function Filters() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const inputSearch = useSelector((state) => state.inputSearch);
+  const { searchedText } = inputSearch;
+
+  const dispatch = useDispatch();
+
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
-  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [result, setResult] = useState(0);
 
@@ -28,7 +35,6 @@ function Filters() {
 
   const handleCategory = (e) => {
     setCategory(e.target.value);
-    setSearch("");
   };
 
   useEffect(() => {
@@ -36,55 +42,59 @@ function Filters() {
       const res = await axios.get(
         `/cardUpload?limit=${
           page * 9
-        }&${category}&${sort}&title[regex]=${search}`
+        }&${category}&${sort}&title[regex]=${searchedText}`
       );
       setProducts(res.data.products);
-      //  console.log(res.data.products);
 
       setResult(res.data.result);
-      //console.log("res-->", res.data.result);
     };
     getProducts();
-  }, [category, sort, page, search]);
-  return (
-    <div className="filter_menu">
-      <div className="Row">
-        <span>Filters:</span>
-        <select name="category" value={category} onChange={handleCategory}>
-          <option value="">All Products</option>
-          {categories.map((category) => (
-            <option value={"category=" + category._id} key={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-      </div>
+  }, [category, sort, page, searchedText]);
 
-      <input
-        type="text"
-        value={search}
-        placeholder="Search"
-        onChange={(e) => setSearch(e.target.value.toLowerCase())}
-      />
+  useEffect(() => {
+    dispatch(listSearch(products));
+  }, [products]);
+
+  return (
+    <div>
+      <div className="filter-box">
+        <div className="filter_menu">
+          <h1 style={{ background: "crimson", color: "white" }}>
+            Apply Filters
+          </h1>
+          <div className="Row">
+            <span>Category:</span>
+            <select name="category" value={category} onChange={handleCategory}>
+              <option value="">All Products</option>
+              {categories.map((category) => (
+                <option value={"category=" + category._id} key={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="Row">
+            <span>Sort by:</span>
+            <select
+              name="category"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="">Newest</option>
+              <option value="sort=oldest">Oldest</option>
+              <option value="sort=-price">Price: High-Low</option>
+              <option value="sort=price">Price: Low-High</option>
+            </select>
+          </div>
+        </div>
+      </div>
       <div className="load_more">
         {result < page * 9 ? (
           " "
         ) : (
           <button onClick={() => setPage(page + 1)}>Load More </button>
         )}
-      </div>
-      <div className="Row">
-        <span>Sort by:</span>
-        <select
-          name="category"
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-        >
-          <option value="">Newest</option>
-          <option value="sort=oldest">Oldest</option>
-          <option value="sort=-price">Price: High-Low</option>
-          <option value="sort=price">Price: Low-High</option>
-        </select>
       </div>
     </div>
   );

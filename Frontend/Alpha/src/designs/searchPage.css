@@ -1,0 +1,83 @@
+.search-page {
+  margin: 20px 10px 10px 10px;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+.search-page .individualSearched-item {
+  margin-bottom: 10%;
+}
+.search-page .searched-item {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  margin-bottom: 10px;
+  min-height: 250px;
+  max-height: 380px;
+  border-bottom: 1px solid #ddd;
+}
+.search-page .item-img {
+  height: 220px;
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 10%;
+  padding: 10px;
+  display: grid;
+  justify-content: center;
+}
+.search-page .item-img img {
+  object-fit: contain;
+  width: 170px;
+  height: 190px;
+  transition: 0.3s;
+}
+.search-page .item-content {
+  display: flex;
+  margin-left: 2%;
+  margin-right: 10%;
+}
+.search-page .item-content .item-price {
+  text-decoration: solid;
+  margin-top: 20px;
+  margin-left: 2%;
+  font-size: xx-large;
+  font-style: italic;
+  font-weight: 700;
+  color: green;
+}
+.search-page .item-content .rat-rev {
+  display: flex;
+  flex-direction: row;
+}
+.search-page .item-content .search-rating {
+  display: inline-block;
+  padding: 2px 4px 2px 6px;
+  color: white;
+  width: 57px;
+  height: 28px;
+  border-radius: 25px;
+  border: none;
+  background-color: #388e3c;
+  margin-right: 6px;
+}
+.search-page .item-content .rat-rev p {
+  color: gray;
+}
+@media screen and (max-width: 720px) {
+  .search-page .item-content {
+    flex-direction: column;
+  }
+  .search-page .item-content .item-price {
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: x-large;
+    font-weight: 550;
+  }
+  .search-page .item-content .rat-rev {
+    flex-direction: column;
+  }
+  .search-page .item-content .rat-rev p {
+    font-size: small;
+  }
+}

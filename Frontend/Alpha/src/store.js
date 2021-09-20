@@ -24,6 +24,10 @@ import {
   commentListReducer,
   commentPostReducer,
 } from "./reducers/commentReducers";
+import {
+  searchInputReducer,
+  searchListReducer,
+} from "./reducers/searchReducers";
 
 const initialState = {
   userSignin: {
@@ -57,6 +61,8 @@ const reducer = combineReducers({
   userNewPassword: userNewPasswordReducer,
   commentPost: commentPostReducer,
   commentList: commentListReducer,
+  searchList: searchListReducer,
+  inputSearch: searchInputReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

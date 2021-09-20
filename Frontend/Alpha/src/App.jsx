@@ -18,6 +18,7 @@ import AdminRoute from "./components/AdminRoute";
 import ForgotPassword from "./registration/ForgotPassword";
 import AddProduct from "./components/AddProduct";
 import Filters from "./components/Filters";
+import SeachPage from "./components/SeachPage";
 
 function App() {
   return (
@@ -25,7 +26,6 @@ function App() {
       <div className="app">
         <Switch>
           <Route exact path="/">
-            <Filters />
             <Home />
           </Route>
 
@@ -91,6 +91,12 @@ function App() {
           <Route path="/orderhistory">
             <Navbar />
             <OrderHistory />
+            <Footer />
+          </Route>
+
+          <Route path="/search">
+            <Navbar />
+            <SeachPage />
             <Footer />
           </Route>
         </Switch>
