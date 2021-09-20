@@ -1,11 +1,14 @@
 import React from "react";
 import StarOutlinedIcon from "@material-ui/icons/StarOutlined";
+import { Link } from "react-router-dom";
 
 function IndividualSearchedItem(props) {
   return (
     <div className="searched-item">
       <div className="item-img">
-        <img src={props.src} alt="" />
+        <Link to={`/product/${props.id}`}>
+          <img src={props.src} alt="" />
+        </Link>
       </div>
       <div className="item-content">
         <div className="item-about">

@@ -26,6 +26,10 @@
   display: grid;
   justify-content: center;
 }
+.search-page .item-img:hover {
+  border: 2px solid rgb(250, 200, 107);
+  transition: ease-in-out 0.3s;
+}
 .search-page .item-img img {
   object-fit: contain;
   width: 170px;
