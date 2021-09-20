@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.becb5a55.chunk.css",
+    "main.js": "/static/js/main.4e9f6df5.chunk.js",
+    "main.js.map": "/static/js/main.4e9f6df5.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.88f961f6.js",
+    "runtime-main.js.map": "/static/js/runtime-main.88f961f6.js.map",
+    "static/css/2.65f8c46c.chunk.css": "/static/css/2.65f8c46c.chunk.css",
+    "static/js/2.23d3ad31.chunk.js": "/static/js/2.23d3ad31.chunk.js",
+    "static/js/2.23d3ad31.chunk.js.map": "/static/js/2.23d3ad31.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.65f8c46c.chunk.css.map": "/static/css/2.65f8c46c.chunk.css.map",
+    "static/css/main.becb5a55.chunk.css.map": "/static/css/main.becb5a55.chunk.css.map",
+    "static/js/2.23d3ad31.chunk.js.LICENSE.txt": "/static/js/2.23d3ad31.chunk.js.LICENSE.txt",
+    "static/media/forgetPass.e9633564.svg": "/static/media/forgetPass.e9633564.svg",
+    "static/media/in.8a25a77e.svg": "/static/media/in.8a25a77e.svg",
+    "static/media/profile.ceb02fb5.svg": "/static/media/profile.ceb02fb5.svg",
+    "static/media/slick-theme.css": "/static/media/slick.c94f7671.ttf",
+    "static/media/up.0bfd9c58.svg": "/static/media/up.0bfd9c58.svg",
+    "static/media/update.8347dd59.svg": "/static/media/update.8347dd59.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.88f961f6.js",
+    "static/css/2.65f8c46c.chunk.css",
+    "static/js/2.23d3ad31.chunk.js",
+    "static/css/main.becb5a55.chunk.css",
+    "static/js/main.4e9f6df5.chunk.js"
+  ]
+}
