@@ -71,6 +71,8 @@
 @media screen and (max-width: 720px) {
   .search-page .item-content {
     flex-direction: column;
+    margin-left: 1rem;
+    margin-right: 0;
   }
   .search-page .item-content .item-price {
     margin-top: 0px;

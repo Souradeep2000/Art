@@ -598,7 +598,6 @@ app.post(
   })
 );
 
-const port = process.env.PORT;
-http.listen(port, function () {
-  console.log(`server is up and running on port : ${port}`);
+http.listen(process.env.PORT || 8069, function () {
+  console.log(`server is up and running on port : ${process.env.PORT}`);
 });

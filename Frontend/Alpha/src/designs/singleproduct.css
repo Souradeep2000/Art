@@ -146,14 +146,17 @@ img {
 }
 @media screen and (max-width: 620px) {
   .img-select {
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    padding-left: 14%;
+    display: flex;
+    flex-flow: row;
   }
   .img-showcase img {
     padding-top: 5%;
     padding-left: 15%;
     padding-right: 15%;
-    height: 400px;
+    height: 280px;
+  }
+  .img-item img {
+    height: 100px;
+    width: 75px;
   }
 }

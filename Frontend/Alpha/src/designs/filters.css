@@ -15,25 +15,18 @@
 
 @media screen and (max-width: 1000px) {
   .filter-box {
-    display: none;
+    width: 0px;
+  }
+  .filter_menu {
+    background: grey;
   }
 }
-.filter_menu select,
-input {
-  border: 2px solid #ffc107;
-  outline: none;
-  height: 40px;
-  padding: 0 5px;
-}
+
 .filter_menu .Row {
   display: flex;
   justify-content: space-between;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   margin-bottom: 20px;
-}
-.filter_menu input {
-  flex: 1;
-  margin: 0 10px;
 }
 
 .search-page .load_more {

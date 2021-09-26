@@ -14,7 +14,7 @@ import AllComments from "./components/AllComments";
 
 const ENDPOINT =
   window.location.host.indexOf("localhost") >= 0
-    ? "http://127.0.0.1:8069"
+    ? "https://art-aficionado-backend.herokuapp.com"
     : window.location.host;
 
 function Singlecard() {
@@ -102,8 +102,6 @@ function Singlecard() {
                           ? singleCard.src
                           : currentImg
                       }
-                      height="552px"
-                      width="552px"
                     />
                   </div>
                 </div>

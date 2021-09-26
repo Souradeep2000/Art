@@ -26,4 +26,7 @@
     width: fit-content;
     height: fit-content;
   }
+  .container {
+    width: 95%;
+  }
 }

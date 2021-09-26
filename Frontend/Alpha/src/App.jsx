@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./registration/fontawesome";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Home";
@@ -17,7 +17,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import ForgotPassword from "./registration/ForgotPassword";
 import AddProduct from "./components/AddProduct";
-import Filters from "./components/Filters";
 import SeachPage from "./components/SeachPage";
 
 function App() {
