@@ -12,10 +12,10 @@ import CommentBox from "./components/CommentBox";
 import { listComments } from "./actions/commentActions";
 import AllComments from "./components/AllComments";
 
-const ENDPOINT =
-  window.location.host.indexOf("localhost") >= 0
-    ? "https://art-aficionado-backend.herokuapp.com"
-    : window.location.host;
+const ENDPOINT = "https://art-aficionado-backend.herokuapp.com/";
+// window.location.host.indexOf("localhost") >= 0
+//   ? "https://art-aficionado-backend.herokuapp.com"
+//   : window.location.host;
 
 function Singlecard() {
   const commentList = useSelector((state) => state.commentList);
